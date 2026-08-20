@@ -19,6 +19,81 @@
     document.head.appendChild(googleTag);
   }
 
+  const trackEvent = (eventName, parameters = {}) => {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('event', eventName, parameters);
+  };
+
+  const getLinkPlacement = (link) => {
+    if (link.classList.contains('whatsapp-float')) return 'floating_whatsapp';
+    if (link.closest('.service-cta')) return 'service_cta';
+    if (link.closest('.case-cta')) return 'case_cta';
+    if (link.closest('.hero-actions')) return 'hero_cta';
+    if (link.closest('.main-nav, .site-header')) return 'header';
+    if (link.closest('.site-footer, .service-footer, .case-footer, .insights-footer')) return 'footer';
+    return 'page_link';
+  };
+
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+    const link = target?.closest('a[href]');
+    if (!link) return;
+
+    let destination;
+    try {
+      destination = new URL(link.getAttribute('href'), window.location.href);
+    } catch {
+      return;
+    }
+
+    const linkText = (link.textContent || link.getAttribute('aria-label') || '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 120);
+    const placement = getLinkPlacement(link);
+
+    if (destination.hostname === 'wa.me' || destination.hostname.endsWith('whatsapp.com')) {
+      trackEvent('whatsapp_click', {
+        link_text: linkText,
+        placement,
+        page_path: window.location.pathname
+      });
+      return;
+    }
+
+    if (
+      destination.origin === window.location.origin &&
+      destination.pathname.replace(/\.html$/, '').includes('/solicitar-orcamento')
+    ) {
+      const service = destination.searchParams.get('servico') || 'nao_informado';
+      trackEvent('quote_start', {
+        service,
+        link_text: linkText,
+        placement,
+        page_path: window.location.pathname
+      });
+    }
+  });
+
+  document.addEventListener('submit', (event) => {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement)) return;
+    if (form.id !== 'contact-form' && form.id !== 'quote-form') return;
+
+    const data = new FormData(form);
+    const isQuoteForm = form.id === 'quote-form';
+    const service = isQuoteForm
+      ? String(data.get('service') || 'nao_informado').trim().slice(0, 100)
+      : 'contato_geral';
+
+    trackEvent('generate_lead', {
+      form_id: form.id,
+      lead_source: isQuoteForm ? 'quote_form' : 'contact_form',
+      service,
+      page_path: window.location.pathname
+    });
+  }, true);
+
   const coreScript = document.createElement('script');
   const scriptUrl = currentScript?.src || new URL('/script.js', window.location.origin).href;
   coreScript.src = new URL('script-core.js', scriptUrl).href;
