@@ -16,3 +16,24 @@
 .home-insights-footer a{color:#86ffb7;font-weight:800;font-size:14px}
 @media(max-width:900px){.home-insights-grid{grid-template-columns:1fr 1fr}.home-insight-card.featured{grid-column:1/-1}}
 @media(max-width:640px){.home-insights-grid{grid-template-columns:1fr}.home-insight-card.featured{grid-column:auto}.home-insight-card,.home-insight-card.featured{min-height:290px}.home-insights-footer{align-items:flex-start;flex-direction:column}}
+
+/* Mantém o menu mobile preso ao viewport mesmo quando o cabeçalho usa backdrop-filter. */
+@media(max-width:1020px){
+  .main-nav{display:none!important}
+  .main-nav.open{
+    position:absolute;
+    top:78px;
+    right:0;
+    bottom:auto;
+    left:0;
+    width:100%;
+    height:calc(100vh - 78px);
+    height:calc(100dvh - 78px);
+    display:flex!important;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    z-index:2;
+  }
+  .menu-toggle{position:relative;z-index:3}
+  body.menu-open .whatsapp-float{display:none}
+}
