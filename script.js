@@ -17,7 +17,8 @@ const servicePageLinks = [
   { index: 1, href: 'servicos/sites-landing-pages.html', label: 'Conhecer o serviço de landing pages' },
   { index: 2, href: 'servicos/software-sob-medida.html', label: 'Conhecer o serviço de software sob medida' },
   { index: 3, href: 'servicos/plataformas-digitais.html', label: 'Conhecer o serviço de plataformas digitais' },
-  { index: 4, href: 'servicos/solucoes-de-ia.html', label: 'Conhecer o serviço de soluções de inteligência artificial' }
+  { index: 4, href: 'servicos/solucoes-de-ia.html', label: 'Conhecer o serviço de soluções de inteligência artificial' },
+  { index: 5, href: 'servicos/evolucao-manutencao.html', label: 'Conhecer o serviço de evolução, manutenção e modernização' }
 ];
 
 servicePageLinks.forEach(({ index, href, label }) => {
