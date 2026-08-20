@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://flaviofreitas1992.github.io/Zoqvera/sitemap.xml
+Sitemap: https://zoqvera.com/sitemap.xml
