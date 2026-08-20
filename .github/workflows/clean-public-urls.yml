@@ -1,0 +1,135 @@
+name: Clean public URLs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/clean-public-urls.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  clean-urls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove .html from public URLs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          page_basenames = [
+              'solicitar-orcamento',
+              'chatbot-ou-assistente-de-ia',
+              'como-implementar-inteligencia-artificial-na-empresa',
+              'como-transformar-planilhas-em-sistema-web',
+              'modernizar-sistema-ou-refazer-do-zero',
+              'quando-usar-inteligencia-artificial-na-empresa',
+              'quanto-custa-criar-site-profissional',
+              'quanto-custa-desenvolver-plataforma-saas',
+              'quanto-custa-desenvolver-software-sob-medida',
+              'software-sob-medida-ou-sistema-pronto',
+              'civica',
+              'cleiton-rodrigues',
+              'teacher-flavius',
+              'evolucao-manutencao',
+              'plataformas-digitais',
+              'sites-landing-pages',
+              'software-sob-medida',
+              'solucoes-de-ia',
+          ]
+
+          def remove_page_extensions(text: str) -> str:
+              for basename in sorted(page_basenames, key=len, reverse=True):
+                  text = text.replace(f'{basename}.html', basename)
+              return text
+
+          html_files = sorted(Path('.').rglob('*.html'))
+          for path in html_files:
+              text = path.read_text(encoding='utf-8')
+              original = text
+
+              # Directory indexes use the directory URL, not /index.
+              text = text.replace('../index.html', '../')
+              text = text.replace('./index.html', './')
+              text = text.replace('insights/index.html', 'insights/')
+              text = text.replace('https://zoqvera.com/index.html', 'https://zoqvera.com/')
+              text = text.replace('https://zoqvera.com/insights/index.html', 'https://zoqvera.com/insights/')
+              text = re.sub(r'(?<=href=["\'])index\.html(?=(?:[?#][^"\']*)?["\'])', './', text)
+
+              text = remove_page_extensions(text)
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+
+          script_path = Path('script.js')
+          script = script_path.read_text(encoding='utf-8')
+          script = remove_page_extensions(script)
+          script = script.replace(
+              "const SEO_BASE_URL = 'https://flaviofreitas1992.github.io/Zoqvera';",
+              "const SEO_BASE_URL = 'https://zoqvera.com';"
+          )
+          script = script.replace(
+              "const currentPage = window.location.pathname.split('/').pop();",
+              "const currentPage = window.location.pathname.split('/').pop().replace(/\\.html$/, '');"
+          )
+          script = script.replace(
+              "const seoPagePath = !relativeSeoPath || relativeSeoPath === 'index.html' ? 'index.html' : relativeSeoPath;",
+              "const normalizedSeoPath = relativeSeoPath.replace(/\\.html$/, '');\nconst seoPagePath = !normalizedSeoPath || normalizedSeoPath === 'index.html' ? 'index.html' : normalizedSeoPath;"
+          )
+
+          cleanup = """// Public URLs are extensionless. GitHub Pages serves the existing .html files\n// at the same path without the extension, so old URLs remain compatible.\nconst cleanPublicPath = (pathname) => {\n  if (pathname.endsWith('/index.html')) return pathname.slice(0, -'index.html'.length);\n  if (pathname.endsWith('.html')) return pathname.slice(0, -'.html'.length);\n  return pathname;\n};\n\nconst publicPath = cleanPublicPath(window.location.pathname);\nif (publicPath !== window.location.pathname) {\n  window.history.replaceState(null, '', `${publicPath}${window.location.search}${window.location.hash}`);\n}\n\n"""
+          if not script.startswith('// Public URLs are extensionless.'):
+              script = cleanup + script
+
+          script_path.write_text(script, encoding='utf-8')
+
+          sitemap_path = Path('sitemap.xml')
+          sitemap = sitemap_path.read_text(encoding='utf-8')
+          sitemap = remove_page_extensions(sitemap)
+          sitemap = sitemap.replace('https://zoqvera.com/index.html', 'https://zoqvera.com/')
+          sitemap = sitemap.replace('https://zoqvera.com/insights/index.html', 'https://zoqvera.com/insights/')
+          sitemap_path.write_text(sitemap, encoding='utf-8')
+
+          # Validate public-facing references. Physical source filenames remain .html by design.
+          offenders = []
+          for path in [*html_files, sitemap_path]:
+              text = path.read_text(encoding='utf-8')
+              for basename in page_basenames:
+                  if f'{basename}.html' in text:
+                      offenders.append(f'{path}: {basename}.html')
+          if offenders:
+              raise SystemExit('Remaining public .html references:\n' + '\n'.join(offenders))
+
+          # Dynamic JavaScript routes must also be extensionless.
+          script_check = script_path.read_text(encoding='utf-8')
+          for basename in page_basenames:
+              if f'{basename}.html' in script_check:
+                  raise SystemExit(f'Remaining script route: {basename}.html')
+          PY
+
+      - name: Remove one-time workflow
+        run: rm .github/workflows/clean-public-urls.yml
+
+      - name: Validate diff
+        run: git diff --check
+
+      - name: Commit clean URLs
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html solicitar-orcamento.html insights/*.html portfolio/*.html servicos/*.html script.js sitemap.xml .github/workflows/clean-public-urls.yml
+          if git diff --cached --quiet; then
+            echo 'No changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Remove .html from public URLs'
+          git push origin main
