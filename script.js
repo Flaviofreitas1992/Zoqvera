@@ -22,6 +22,17 @@ if (civicaProjectLink) {
   if (civicaProjectCta) civicaProjectCta.textContent = 'Ver case →';
 }
 
+const teacherProjectLink = document.querySelector('.project-teacher .project-link');
+if (teacherProjectLink) {
+  teacherProjectLink.href = 'portfolio/teacher-flavius.html';
+  teacherProjectLink.removeAttribute('target');
+  teacherProjectLink.removeAttribute('rel');
+  teacherProjectLink.setAttribute('aria-label', 'Ver case do Teacher Flavius');
+
+  const teacherProjectCta = teacherProjectLink.querySelector('.project-cta');
+  if (teacherProjectCta) teacherProjectCta.textContent = 'Ver case →';
+}
+
 if (formNote) {
   formNote.textContent = 'Ao enviar, abriremos o WhatsApp da Zoqvera com os dados do seu projeto.';
 }
