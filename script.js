@@ -19,9 +19,36 @@
     document.head.appendChild(googleTag);
   }
 
-  const trackEvent = (eventName, parameters = {}) => {
-    if (typeof window.gtag !== 'function') return;
-    window.gtag('event', eventName, parameters);
+  const trackEvent = (eventName, parameters = {}, callback = null) => {
+    if (typeof window.gtag !== 'function') {
+      callback?.();
+      return;
+    }
+
+    if (!callback) {
+      window.gtag('event', eventName, {
+        ...parameters,
+        send_to: GA_MEASUREMENT_ID
+      });
+      return;
+    }
+
+    let callbackExecuted = false;
+    const runCallbackOnce = () => {
+      if (callbackExecuted) return;
+      callbackExecuted = true;
+      callback();
+    };
+
+    window.gtag('event', eventName, {
+      ...parameters,
+      send_to: GA_MEASUREMENT_ID,
+      event_callback: runCallbackOnce,
+      event_timeout: 1000
+    });
+
+    // Fallback independente do gtag para nunca bloquear a navegação.
+    window.setTimeout(runCallbackOnce, 1300);
   };
 
   const isWhatsappDestination = (destination) => (
@@ -136,10 +163,8 @@
       trackEvent('whatsapp_click', {
         link_text: linkText,
         placement,
-        page_path: window.location.pathname,
-        transport_type: 'beacon'
-      });
-      openWhatsappDestination(destination);
+        page_path: window.location.pathname
+      }, () => openWhatsappDestination(destination));
       return;
     }
 
@@ -147,14 +172,15 @@
       destination.origin === window.location.origin &&
       destination.pathname.replace(/\.html$/, '').includes('/solicitar-orcamento')
     ) {
+      event.preventDefault();
       const service = destination.searchParams.get('servico') || 'nao_informado';
       trackEvent('quote_start', {
         service,
         link_text: linkText,
         placement,
-        page_path: window.location.pathname,
-        transport_type: 'beacon'
-      });
+        page_path: window.location.pathname
+      }, () => window.location.assign(destination.href));
+      return;
     }
   });
 
@@ -173,8 +199,7 @@
       form_id: form.id,
       lead_source: isQuoteForm ? 'quote_form' : 'contact_form',
       service,
-      page_path: window.location.pathname,
-      transport_type: 'beacon'
+      page_path: window.location.pathname
     });
   }, true);
 
