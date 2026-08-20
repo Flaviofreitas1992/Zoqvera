@@ -286,3 +286,223 @@ if (seoPage) {
   });
   document.head.appendChild(structuredData);
 }
+
+// FAQs de cauda longa para as páginas de serviço.
+// O conteúdo visível e o FAQPage usam a mesma fonte de dados.
+const serviceFaqs = {
+  'sites-landing-pages.html': {
+    heading: 'Perguntas sobre criação de sites e landing pages',
+    intro: 'Respostas objetivas para dúvidas comuns antes de contratar um site profissional ou uma landing page.',
+    items: [
+      {
+        question: 'Qual é a diferença entre site institucional e landing page?',
+        answer: 'Um site institucional normalmente apresenta a empresa ou profissional de forma mais ampla, com serviços, diferenciais, portfólio e contato. Uma landing page é mais focada: organiza a mensagem em torno de uma oferta ou objetivo principal e reduz distrações para conduzir o visitante a uma ação específica.'
+      },
+      {
+        question: 'Quanto custa criar um site profissional?',
+        answer: 'O valor depende do número de páginas, complexidade visual, conteúdo, integrações, formulários, necessidades de SEO e funcionalidades adicionais. Um orçamento confiável só pode ser definido depois de entender objetivo, escopo e materiais disponíveis.'
+      },
+      {
+        question: 'Quanto tempo leva para criar um site ou landing page?',
+        answer: 'O prazo varia conforme escopo, quantidade de conteúdo, revisões e integrações. Uma página simples tende a exigir menos etapas do que um site institucional completo. O cronograma é definido depois do briefing e da priorização das entregas.'
+      },
+      {
+        question: 'O site funciona bem no celular?',
+        answer: 'Sim. O projeto é desenvolvido com layout responsivo para adaptar navegação, conteúdo e componentes a diferentes tamanhos de tela. A experiência mobile é tratada como parte do produto, não como uma versão separada feita no final.'
+      },
+      {
+        question: 'Um site novo já vem preparado para SEO?',
+        answer: 'A estrutura pode incluir fundamentos de SEO técnico e on-page, como títulos, descrições, hierarquia de headings, URLs, Open Graph, sitemap, dados estruturados e performance. Posicionamento orgânico, porém, também depende de concorrência, autoridade, conteúdo e tempo de indexação.'
+      },
+      {
+        question: 'É possível integrar WhatsApp, formulários e outros serviços ao site?',
+        answer: 'Sim. Dependendo do projeto, a página pode integrar WhatsApp, formulários, pagamentos, analytics, ferramentas de automação, APIs e outros serviços. Cada integração é avaliada de acordo com a jornada do usuário e a necessidade real do negócio.'
+      }
+    ]
+  },
+  'software-sob-medida.html': {
+    heading: 'Perguntas sobre desenvolvimento de software sob medida',
+    intro: 'Dúvidas frequentes de empresas que precisam substituir planilhas, processos manuais ou ferramentas genéricas por um sistema próprio.',
+    items: [
+      {
+        question: 'O que é software sob medida e quando vale a pena?',
+        answer: 'É um sistema construído em torno das regras, usuários e processos específicos de uma operação. Faz sentido quando ferramentas prontas geram retrabalho, não representam bem o fluxo real, exigem muitas adaptações ou impedem automações e integrações importantes.'
+      },
+      {
+        question: 'Quanto custa desenvolver um software sob medida?',
+        answer: 'O custo depende do escopo: perfis de usuário, regras de negócio, telas, banco de dados, integrações, pagamentos, segurança, automações e nível de complexidade operacional. A estimativa é feita depois de mapear o problema e definir o núcleo do produto.'
+      },
+      {
+        question: 'Quanto tempo leva para desenvolver um sistema sob medida?',
+        answer: 'Não existe um prazo único. Sistemas podem ser divididos em etapas, começando por um MVP ou por um fluxo prioritário. O cronograma depende da quantidade de regras, integrações, dados, interfaces e validações necessárias.'
+      },
+      {
+        question: 'Um software sob medida pode substituir planilhas e processos manuais?',
+        answer: 'Em muitos casos, sim. O sistema pode centralizar registros, aplicar regras automaticamente, controlar permissões, disparar notificações e reduzir tarefas repetitivas. O primeiro passo é identificar quais partes do processo realmente devem ser automatizadas.'
+      },
+      {
+        question: 'É possível integrar o sistema com pagamentos, e-mail e APIs?',
+        answer: 'Sim. Sistemas web podem se conectar a gateways de pagamento, serviços de e-mail, autenticação, bancos de dados, webhooks e APIs externas. A arquitetura precisa considerar segurança, limites e comportamento de cada integração.'
+      },
+      {
+        question: 'O software pode continuar evoluindo depois do lançamento?',
+        answer: 'Sim. Uma arquitetura adequada permite adicionar funcionalidades, ajustar regras e integrar novos serviços em ciclos posteriores. O ideal é priorizar primeiro o núcleo que gera valor e evoluir o produto conforme a operação produz novas necessidades.'
+      }
+    ]
+  },
+  'plataformas-digitais.html': {
+    heading: 'Perguntas sobre desenvolvimento de plataformas digitais e SaaS',
+    intro: 'Questões comuns antes de transformar uma ideia em portal, SaaS, área logada ou aplicação web multiusuário.',
+    items: [
+      {
+        question: 'Qual é a diferença entre site, sistema e plataforma digital?',
+        answer: 'Um site é principalmente uma experiência de conteúdo e presença digital. Um sistema executa regras e processos específicos. Uma plataforma normalmente conecta vários usuários, dados, permissões e fluxos em uma experiência contínua, podendo incluir áreas logadas, dashboards, pagamentos e integrações.'
+      },
+      {
+        question: 'Quanto custa desenvolver uma plataforma digital ou SaaS?',
+        answer: 'O investimento varia conforme perfis de usuário, funcionalidades, regras de negócio, dados, integrações, cobrança, segurança e complexidade do produto. Para estimar com responsabilidade, primeiro é necessário definir o problema, o público e o escopo do MVP.'
+      },
+      {
+        question: 'Quanto tempo leva para desenvolver uma plataforma?',
+        answer: 'Depende do tamanho do MVP e das integrações necessárias. Em vez de tentar construir todo o produto de uma vez, costuma ser mais eficiente separar o desenvolvimento em etapas e validar primeiro os fluxos que sustentam a proposta de valor.'
+      },
+      {
+        question: 'O que é um MVP de plataforma digital?',
+        answer: 'É a primeira versão funcional com o conjunto mínimo de capacidades necessárias para resolver o problema central e testar a proposta com usuários reais. MVP não significa produto improvisado; significa priorização deliberada do que precisa existir primeiro.'
+      },
+      {
+        question: 'Uma plataforma pode ter diferentes tipos de usuário e permissões?',
+        answer: 'Sim. É possível criar papéis como administrador, equipe, cliente, aluno, parceiro ou outros perfis, cada um com acessos e jornadas específicas. As regras de autorização devem ser definidas desde a arquitetura para proteger dados e operações.'
+      },
+      {
+        question: 'É possível começar com uma plataforma pequena e escalar depois?',
+        answer: 'Sim. Uma estratégia comum é começar pelo núcleo de valor, estruturar bem dados e regras e ampliar o produto por ciclos. Escalabilidade envolve tanto arquitetura técnica quanto clareza sobre quais funcionalidades realmente precisam ser adicionadas.'
+      }
+    ]
+  },
+  'solucoes-de-ia.html': {
+    heading: 'Perguntas sobre inteligência artificial para empresas',
+    intro: 'Respostas para empresas que avaliam usar assistentes, automação, análise ou IA integrada aos próprios produtos e dados.',
+    items: [
+      {
+        question: 'Como saber se minha empresa realmente precisa de inteligência artificial?',
+        answer: 'IA faz mais sentido quando a tarefa exige interpretação de linguagem, classificação, síntese, busca contextual, geração assistida ou decisões baseadas em padrões difíceis de expressar apenas por regras fixas. Se uma regra determinística resolver melhor, software convencional tende a ser mais seguro e previsível.'
+      },
+      {
+        question: 'Que processos de uma empresa podem ser automatizados com IA?',
+        answer: 'Alguns exemplos são triagem de textos, extração de informações, organização de documentos, busca contextual, preparação de respostas, classificação e apoio analítico. A automação deve ser definida tarefa por tarefa, considerando custo, risco de erro e necessidade de revisão humana.'
+      },
+      {
+        question: 'Qual é a diferença entre um assistente de IA e um chatbot comum?',
+        answer: 'Um chatbot tradicional costuma seguir fluxos ou respostas predefinidas. Um assistente de IA pode interpretar linguagem mais livre, usar contexto e executar tarefas mais flexíveis. Ainda assim, ele precisa de limites, fontes confiáveis e regras claras para funcionar dentro de uma operação real.'
+      },
+      {
+        question: 'Uma solução de IA pode consultar documentos e dados da empresa?',
+        answer: 'Sim, desde que a arquitetura trate permissões, fontes, segurança e proveniência corretamente. A solução pode combinar modelos de linguagem com documentos, APIs e dados estruturados sem transformar toda informação interna em conhecimento irrestrito do modelo.'
+      },
+      {
+        question: 'Como reduzir erros e alucinações em sistemas de IA?',
+        answer: 'A mitigação pode combinar contexto controlado, fontes verificáveis, saídas estruturadas, validações determinísticas, casos de teste, fallbacks e revisão humana nos pontos de maior risco. Nenhum desses mecanismos elimina completamente a incerteza, por isso o nível de controle deve acompanhar o impacto da tarefa.'
+      },
+      {
+        question: 'Quanto custa desenvolver uma solução de inteligência artificial?',
+        answer: 'O custo depende da aplicação, dos modelos utilizados, volume de uso, integrações, dados, interface, avaliação e requisitos de segurança. Uma solução simples integrada a um fluxo existente é muito diferente de um produto completo com múltiplos usuários e fontes de dados.'
+      }
+    ]
+  },
+  'evolucao-manutencao.html': {
+    heading: 'Perguntas sobre manutenção e modernização de sistemas',
+    intro: 'Dúvidas de empresas que já possuem um site, sistema ou plataforma e precisam corrigir, ampliar ou modernizar a base existente.',
+    items: [
+      {
+        question: 'Vale mais a pena modernizar um sistema existente ou refazer do zero?',
+        answer: 'Depende da qualidade da base atual, dos riscos, da dívida técnica e do quanto o sistema ainda atende à operação. Reescrever tudo pode ser caro e arriscado. Muitas vezes é melhor modernizar por etapas, preservando o que funciona e substituindo apenas o que realmente limita o produto.'
+      },
+      {
+        question: 'É possível assumir a manutenção de um sistema criado por outra equipe?',
+        answer: 'Sim, desde que seja possível acessar e avaliar código, infraestrutura, dependências, banco de dados e documentação disponíveis. Antes de alterar o produto, é necessário fazer um diagnóstico para entender riscos, arquitetura e pontos críticos.'
+      },
+      {
+        question: 'O que pode estar incluído na manutenção de software?',
+        answer: 'O trabalho pode envolver correções, novas funcionalidades, atualizações de dependências, performance, segurança, integrações, ajustes de banco de dados e redução de dívida técnica. O escopo concreto é definido depois da análise do sistema existente.'
+      },
+      {
+        question: 'Como modernizar um sistema legado sem parar a operação?',
+        answer: 'Uma abordagem comum é dividir a modernização em intervenções menores, mapear dependências, priorizar áreas críticas e substituir componentes gradualmente. O plano precisa considerar dados, integrações e comportamento atual para reduzir o risco de regressões.'
+      },
+      {
+        question: 'É possível adicionar novas funcionalidades sem reconstruir o sistema inteiro?',
+        answer: 'Muitas vezes, sim. A viabilidade depende da arquitetura atual e do acoplamento entre componentes. Um diagnóstico técnico ajuda a decidir se a nova funcionalidade pode ser incorporada com segurança ou se alguma parte da base precisa ser refatorada antes.'
+      },
+      {
+        question: 'A manutenção pode ser feita de forma recorrente?',
+        answer: 'Pode. A atuação pode ocorrer em projetos pontuais ou em ciclos recorrentes de evolução, dependendo do volume de demandas e da criticidade da operação. Frequência, prioridades e responsabilidades precisam ser formalizadas no escopo contratado.'
+      }
+    ]
+  }
+};
+
+const currentServiceFile = window.location.pathname.split('/').pop();
+const currentFaq = serviceFaqs[currentServiceFile];
+const serviceCta = document.querySelector('.service-cta');
+
+if (currentFaq && serviceCta && !document.querySelector('.service-faq')) {
+  const faqSection = document.createElement('section');
+  faqSection.className = 'service-section service-faq';
+  faqSection.id = 'perguntas-frequentes';
+  faqSection.innerHTML = `
+    <div class="container">
+      <div class="service-section-head">
+        <span class="service-index">FAQ / DÚVIDAS FREQUENTES</span>
+        <div class="service-copy">
+          <h2>${currentFaq.heading}</h2>
+          <p>${currentFaq.intro}</p>
+        </div>
+      </div>
+      <div class="service-faq-list">
+        ${currentFaq.items.map((item) => `
+          <details class="service-faq-item">
+            <summary>${item.question}<span aria-hidden="true">+</span></summary>
+            <div class="service-faq-answer"><p>${item.answer}</p></div>
+          </details>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  serviceCta.parentNode.insertBefore(faqSection, serviceCta);
+
+  const faqStyles = document.createElement('style');
+  faqStyles.textContent = `
+    .service-faq{background:#0a1016}
+    .service-faq-list{margin-top:58px;border-top:1px solid var(--service-line)}
+    .service-faq-item{border-bottom:1px solid var(--service-line)}
+    .service-faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:27px 0;font-size:19px;font-weight:700;line-height:1.35;letter-spacing:-.025em}
+    .service-faq-item summary::-webkit-details-marker{display:none}
+    .service-faq-item summary span{flex:0 0 auto;width:32px;height:32px;border:1px solid var(--service-line);border-radius:50%;display:grid;place-items:center;color:var(--service-accent);font:500 20px/1 'DM Mono',monospace;transition:transform .2s ease,border-color .2s ease}
+    .service-faq-item[open] summary span{transform:rotate(45deg);border-color:rgba(134,255,183,.45)}
+    .service-faq-answer{max-width:850px;padding:0 58px 27px 0}
+    .service-faq-answer p{margin:0;color:var(--service-muted);font-size:15px;line-height:1.8}
+    @media(max-width:640px){.service-faq-list{margin-top:42px}.service-faq-item summary{font-size:17px;padding:22px 0}.service-faq-answer{padding-right:0}.service-faq-item summary span{width:30px;height:30px}}
+    @media(prefers-reduced-motion:reduce){.service-faq-item summary span{transition:none}}
+  `;
+  document.head.appendChild(faqStyles);
+
+  document.querySelectorAll('script[data-zoqvera-faq-schema]').forEach((node) => node.remove());
+  const faqStructuredData = document.createElement('script');
+  faqStructuredData.type = 'application/ld+json';
+  faqStructuredData.dataset.zoqveraFaqSchema = 'true';
+  faqStructuredData.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${SEO_BASE_URL}/servicos/${currentServiceFile}#faq`,
+    mainEntity: currentFaq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer
+      }
+    }))
+  });
+  document.head.appendChild(faqStructuredData);
+}
