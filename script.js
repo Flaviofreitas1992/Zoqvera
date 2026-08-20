@@ -7,7 +7,13 @@ const contactForm = document.querySelector('#contact-form');
 const formNote = document.querySelector('#form-note');
 const year = document.querySelector('#year');
 
+const WHATSAPP_NUMBER = '5521984193930';
+
 if (year) year.textContent = new Date().getFullYear();
+
+if (formNote) {
+  formNote.textContent = 'Ao enviar, abriremos o WhatsApp da Zoqvera com os dados do seu projeto.';
+}
 
 const updateHeader = () => {
   header?.classList.toggle('scrolled', window.scrollY > 18);
@@ -48,6 +54,26 @@ reveals.forEach((element) => observer.observe(element));
 
 contactForm?.addEventListener('submit', (event) => {
   event.preventDefault();
-  formNote.textContent = 'Formulário pronto. Falta apenas conectar o canal comercial da Zoqvera para o envio real.';
-  formNote.setAttribute('role', 'status');
+
+  const formData = new FormData(contactForm);
+  const name = String(formData.get('name') || '').trim();
+  const email = String(formData.get('email') || '').trim();
+  const message = String(formData.get('message') || '').trim();
+
+  const whatsappMessage = [
+    'Olá! Entrei em contato pelo site da Zoqvera.',
+    '',
+    `Nome: ${name}`,
+    `E-mail: ${email}`,
+    `Projeto: ${message}`
+  ].join('\n');
+
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+
+  if (formNote) {
+    formNote.textContent = 'Abrindo o WhatsApp para enviar os dados do seu projeto...';
+    formNote.setAttribute('role', 'status');
+  }
+
+  window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 });
