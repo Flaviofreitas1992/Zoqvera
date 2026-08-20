@@ -1,0 +1,219 @@
+.cleiton-case-page {
+  --case-green: #d8c8b2;
+  --case-blue: #9db4a9;
+  --case-bg: #0b0f0d;
+  --case-panel: #121714;
+  --case-muted: #a8aea9;
+}
+
+.cleiton-case-page .case-hero::before {
+  background: radial-gradient(circle, rgba(216,200,178,.16), rgba(36,84,69,.09) 46%, transparent 70%);
+}
+
+.cleiton-case-page .case-title span,
+.cleiton-case-page .case-label,
+.cleiton-case-page .case-section-index,
+.cleiton-case-page .feature-card span,
+.cleiton-case-page .principle-item strong,
+.cleiton-case-page .result-card span {
+  color: #d8c8b2;
+}
+
+.cleiton-case-page .case-label::before {
+  background: #d8c8b2;
+  box-shadow: 0 0 18px rgba(216,200,178,.55);
+}
+
+.cleiton-case-page .button-primary {
+  background: #d8c8b2;
+  color: #17201c;
+}
+
+.cleiton-case-page .button-primary:hover {
+  background: #eadfce;
+}
+
+.cleiton-case-page .case-section-light .case-section-index,
+.cleiton-case-page .problem-card span {
+  color: #315c4d;
+}
+
+.cleiton-stage {
+  background: #171c18;
+}
+
+.cleiton-preview {
+  min-height: 563px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cleiton-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background-image: url('https://cleitonrodriguespsi.com/assets/cleiton-rodrigues.webp');
+  background-size: cover;
+  background-position: 54% 42%;
+  transform: scale(1.015);
+}
+
+.cleiton-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(18,37,31,.88) 0%, rgba(18,37,31,.67) 42%, rgba(18,37,31,.10) 70%, rgba(18,37,31,.02) 100%),
+    linear-gradient(0deg, rgba(12,27,22,.45) 0%, transparent 45%);
+}
+
+.cleiton-preview-content {
+  min-height: 563px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 38px 46px 34px;
+  color: #fffaf2;
+}
+
+.cleiton-brand {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  width: fit-content;
+}
+
+.cleiton-brand strong {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.cleiton-brand span {
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .76;
+}
+
+.cleiton-preview-copy {
+  max-width: 650px;
+  padding: 40px 0 18px;
+}
+
+.cleiton-preview-copy > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 10px "DM Mono", monospace;
+  letter-spacing: .12em;
+  opacity: .84;
+}
+
+.cleiton-preview-copy > span::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: currentColor;
+  opacity: .7;
+}
+
+.cleiton-preview-copy h2 {
+  margin: 18px 0 18px;
+  max-width: 700px;
+  font-family: Georgia, serif;
+  font-size: clamp(46px, 5.5vw, 78px);
+  line-height: .93;
+  letter-spacing: -.045em;
+  font-weight: 400;
+}
+
+.cleiton-preview-copy p {
+  max-width: 530px;
+  margin: 0 0 24px;
+  color: rgba(255,255,255,.82);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.cleiton-preview-button {
+  width: fit-content;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  background: #f4ede1;
+  color: #173429;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.cleiton-preview-note {
+  align-self: flex-end;
+  font: 500 10px "DM Mono", monospace;
+  letter-spacing: .05em;
+  color: rgba(255,255,255,.68);
+}
+
+.cleiton-case-page .result-card {
+  background: linear-gradient(145deg, rgba(216,200,178,.08), rgba(36,84,69,.07));
+}
+
+.cleiton-case-page .case-cta .button-primary {
+  background: #173c31;
+  color: white;
+}
+
+.cleiton-case-page .case-cta .button-primary:hover {
+  background: #245445;
+}
+
+.cleiton-case-page .case-cta .button-outline:hover {
+  border-color: #315c4d;
+  color: #315c4d;
+}
+
+@media (max-width: 900px) {
+  .cleiton-preview-content {
+    padding: 34px;
+  }
+
+  .cleiton-photo {
+    background-position: 62% 42%;
+  }
+}
+
+@media (max-width: 640px) {
+  .cleiton-preview {
+    min-height: 700px;
+  }
+
+  .cleiton-photo {
+    background-position: 66% 42%;
+  }
+
+  .cleiton-overlay {
+    background:
+      linear-gradient(90deg, rgba(18,37,31,.89), rgba(18,37,31,.55)),
+      linear-gradient(0deg, rgba(12,27,22,.50), transparent 52%);
+  }
+
+  .cleiton-preview-content {
+    min-height: 700px;
+    padding: 28px 22px;
+  }
+
+  .cleiton-preview-copy {
+    padding-top: 170px;
+  }
+
+  .cleiton-preview-copy h2 {
+    font-size: 48px;
+  }
+
+  .cleiton-preview-note {
+    align-self: flex-start;
+  }
+}
