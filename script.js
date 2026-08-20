@@ -203,6 +203,85 @@
     });
   }, true);
 
+  // A home funciona como visão geral. O catálogo completo fica em /servicos/.
+  const buildHomeServiceOverview = () => {
+    const servicesSection = document.querySelector('#servicos');
+    const grid = servicesSection?.querySelector('.services-grid');
+    if (!grid || grid.dataset.catalogOverview === 'true') return;
+
+    const services = [
+      {
+        number: '01',
+        icon: '↗',
+        title: 'Landing Page Profissional',
+        description: 'Página única voltada para apresentação, captação de leads ou vendas.',
+        tags: ['Apresentação', 'Leads', 'Vendas'],
+        query: 'Landing Page Profissional'
+      },
+      {
+        number: '02',
+        icon: '▤',
+        title: 'Site Institucional',
+        description: 'Site completo para empresas apresentarem marca, serviços, diferenciais e canais de contato.',
+        tags: ['Empresa', 'Credibilidade', 'Conteúdo'],
+        query: 'Site Institucional'
+      },
+      {
+        number: '03',
+        icon: '▦',
+        title: 'Loja Virtual',
+        description: 'Catálogo, carrinho, pagamentos e gestão de produtos para vender online.',
+        tags: ['Catálogo', 'Carrinho', 'Pagamentos'],
+        query: 'Loja Virtual'
+      },
+      {
+        number: '04',
+        icon: '◫',
+        title: 'Sistema Web Personalizado',
+        description: 'Plataformas e sistemas específicos para processos, regras e necessidades do negócio.',
+        tags: ['Regras de negócio', 'Dados', 'Integrações'],
+        query: 'Sistema Web Personalizado'
+      },
+      {
+        number: '05',
+        icon: '◎',
+        title: 'Aplicativo Web',
+        description: 'Aplicações acessíveis pelo navegador, adaptadas para celular e computador.',
+        tags: ['Navegador', 'Mobile', 'Desktop'],
+        query: 'Aplicativo Web'
+      },
+      {
+        number: '06',
+        icon: '✦',
+        title: 'Integração com Inteligência Artificial',
+        description: 'Chatbots, geração de conteúdo, análise de dados e automações com IA.',
+        tags: ['Chatbots', 'Automação', 'Análise'],
+        query: 'Integração com Inteligência Artificial',
+        featured: true
+      }
+    ];
+
+    grid.innerHTML = services.map((service) => {
+      const featuredClass = service.featured ? ' service-card-featured' : '';
+      const tags = service.tags.map((tag) => `<li>${tag}</li>`).join('');
+      const href = `solicitar-orcamento?servico=${encodeURIComponent(service.query)}`;
+      return `<article class="service-card${featuredClass} reveal"><a class="service-card-link" href="${href}" aria-label="Solicitar orçamento para ${service.title}"><span class="service-num">${service.number}</span><div class="service-icon">${service.icon}</div><h3>${service.title}</h3><p>${service.description}</p><ul>${tags}</ul></a></article>`;
+    }).join('');
+
+    grid.dataset.catalogOverview = 'true';
+
+    if (!servicesSection.querySelector('.services-overview-footer')) {
+      grid.insertAdjacentHTML('afterend', `
+        <div class="services-overview-footer reveal">
+          <p>Precisa de página de vendas, site para profissional liberal, automação, pagamentos, área do cliente, agendamento, SEO ou suporte técnico?</p>
+          <a class="button services-catalog-button" href="servicos/">Ver todos os serviços <span>→</span></a>
+        </div>
+      `);
+    }
+  };
+
+  buildHomeServiceOverview();
+
   const coreScript = document.createElement('script');
   const scriptUrl = currentScript?.src || new URL('/script.js', window.location.origin).href;
   coreScript.src = new URL('script-core.js', scriptUrl).href;
