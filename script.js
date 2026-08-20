@@ -24,6 +24,28 @@
     window.gtag('event', eventName, parameters);
   };
 
+  const isWhatsappDestination = (destination) => (
+    destination?.hostname === 'wa.me' || destination?.hostname?.endsWith('whatsapp.com')
+  );
+
+  // Em alguns navegadores móveis/webviews, abrir o WhatsApp em uma nova aba
+  // pode ser bloqueado. Mantemos a navegação no mesmo contexto para permitir
+  // que o navegador encaminhe corretamente para o aplicativo.
+  const nativeWindowOpen = window.open.bind(window);
+  window.open = (url, target, features) => {
+    try {
+      const destination = new URL(url, window.location.href);
+      if (isWhatsappDestination(destination)) {
+        window.location.assign(destination.href);
+        return null;
+      }
+    } catch {
+      // Se não for possível interpretar a URL, preserva o comportamento nativo.
+    }
+
+    return nativeWindowOpen(url, target, features);
+  };
+
   const getLinkPlacement = (link) => {
     if (link.classList.contains('whatsapp-float')) return 'floating_whatsapp';
     if (link.closest('.service-cta')) return 'service_cta';
@@ -52,12 +74,15 @@
       .slice(0, 120);
     const placement = getLinkPlacement(link);
 
-    if (destination.hostname === 'wa.me' || destination.hostname.endsWith('whatsapp.com')) {
+    if (isWhatsappDestination(destination)) {
+      event.preventDefault();
       trackEvent('whatsapp_click', {
         link_text: linkText,
         placement,
-        page_path: window.location.pathname
+        page_path: window.location.pathname,
+        transport_type: 'beacon'
       });
+      window.location.assign(destination.href);
       return;
     }
 
@@ -70,7 +95,8 @@
         service,
         link_text: linkText,
         placement,
-        page_path: window.location.pathname
+        page_path: window.location.pathname,
+        transport_type: 'beacon'
       });
     }
   });
@@ -90,7 +116,8 @@
       form_id: form.id,
       lead_source: isQuoteForm ? 'quote_form' : 'contact_form',
       service,
-      page_path: window.location.pathname
+      page_path: window.location.pathname,
+      transport_type: 'beacon'
     });
   }, true);
 
