@@ -1,3 +1,16 @@
+// Public URLs are extensionless. GitHub Pages serves the existing .html files
+// at the same path without the extension, so old URLs remain compatible.
+const cleanPublicPath = (pathname) => {
+  if (pathname.endsWith('/index.html')) return pathname.slice(0, -'index.html'.length);
+  if (pathname.endsWith('.html')) return pathname.slice(0, -'.html'.length);
+  return pathname;
+};
+
+const publicPath = cleanPublicPath(window.location.pathname);
+if (publicPath !== window.location.pathname) {
+  window.history.replaceState(null, '', `${publicPath}${window.location.search}${window.location.hash}`);
+}
+
 const header = document.querySelector('.site-header');
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.main-nav');
@@ -12,35 +25,35 @@ if (year) year.textContent = new Date().getFullYear();
 
 const homeQuoteCta = document.querySelector('.nav-cta');
 if (homeQuoteCta) {
-  homeQuoteCta.href = 'solicitar-orcamento.html';
+  homeQuoteCta.href = 'solicitar-orcamento';
   homeQuoteCta.textContent = 'Solicitar orçamento';
 }
 
 const serviceQuoteByPage = {
-  'sites-landing-pages.html': 'Sites e Landing Pages',
-  'software-sob-medida.html': 'Software sob medida',
-  'plataformas-digitais.html': 'Plataformas Digitais',
-  'solucoes-de-ia.html': 'Soluções de IA',
-  'evolucao-manutencao.html': 'Evolução e Manutenção'
+  'sites-landing-pages': 'Sites e Landing Pages',
+  'software-sob-medida': 'Software sob medida',
+  'plataformas-digitais': 'Plataformas Digitais',
+  'solucoes-de-ia': 'Soluções de IA',
+  'evolucao-manutencao': 'Evolução e Manutenção'
 };
 
 const serviceNavCta = document.querySelector('.service-nav-cta');
 if (serviceNavCta) {
-  const currentPage = window.location.pathname.split('/').pop();
+  const currentPage = window.location.pathname.split('/').pop().replace(/\.html$/, '');
   const selectedService = serviceQuoteByPage[currentPage];
   const query = selectedService ? `?servico=${encodeURIComponent(selectedService)}` : '';
-  serviceNavCta.href = `../solicitar-orcamento.html${query}`;
+  serviceNavCta.href = `../solicitar-orcamento${query}`;
   serviceNavCta.textContent = 'Solicitar orçamento';
 }
 
 const serviceCards = document.querySelectorAll('.service-card');
 const servicePageLinks = [
-  ['servicos/sites-landing-pages.html', 'Conhecer o serviço de sites institucionais'],
-  ['servicos/sites-landing-pages.html', 'Conhecer o serviço de landing pages'],
-  ['servicos/software-sob-medida.html', 'Conhecer o serviço de software sob medida'],
-  ['servicos/plataformas-digitais.html', 'Conhecer o serviço de plataformas digitais'],
-  ['servicos/solucoes-de-ia.html', 'Conhecer o serviço de soluções de inteligência artificial'],
-  ['servicos/evolucao-manutencao.html', 'Conhecer o serviço de evolução, manutenção e modernização']
+  ['servicos/sites-landing-pages', 'Conhecer o serviço de sites institucionais'],
+  ['servicos/sites-landing-pages', 'Conhecer o serviço de landing pages'],
+  ['servicos/software-sob-medida', 'Conhecer o serviço de software sob medida'],
+  ['servicos/plataformas-digitais', 'Conhecer o serviço de plataformas digitais'],
+  ['servicos/solucoes-de-ia', 'Conhecer o serviço de soluções de inteligência artificial'],
+  ['servicos/evolucao-manutencao', 'Conhecer o serviço de evolução, manutenção e modernização']
 ];
 
 serviceCards.forEach((card, index) => {
@@ -61,9 +74,9 @@ if (serviceCards.length) {
 }
 
 [
-  ['.project-civica .project-link', 'portfolio/civica.html', 'Ver case da Plataforma Cívica'],
-  ['.project-teacher .project-link', 'portfolio/teacher-flavius.html', 'Ver case do Teacher Flavius'],
-  ['.project-cleiton .project-link', 'portfolio/cleiton-rodrigues.html', 'Ver case do Cleiton Rodrigues']
+  ['.project-civica .project-link', 'portfolio/civica', 'Ver case da Plataforma Cívica'],
+  ['.project-teacher .project-link', 'portfolio/teacher-flavius', 'Ver case do Teacher Flavius'],
+  ['.project-cleiton .project-link', 'portfolio/cleiton-rodrigues', 'Ver case do Cleiton Rodrigues']
 ].forEach(([selector, href, label]) => {
   const link = document.querySelector(selector);
   if (!link) return;
@@ -148,13 +161,14 @@ document.head.appendChild(floatingStyles);
 
 // SEO técnico centralizado. Enquanto o domínio próprio não estiver ativo,
 // as URLs canônicas usam o endereço atual do GitHub Pages.
-const SEO_BASE_URL = 'https://flaviofreitas1992.github.io/Zoqvera';
+const SEO_BASE_URL = 'https://zoqvera.com';
 const currentPathname = window.location.pathname;
 const repositoryPrefix = '/Zoqvera/';
 const relativeSeoPath = currentPathname.startsWith(repositoryPrefix)
   ? currentPathname.slice(repositoryPrefix.length)
   : currentPathname.replace(/^\/+/, '');
-const seoPagePath = !relativeSeoPath || relativeSeoPath === 'index.html' ? 'index.html' : relativeSeoPath;
+const normalizedSeoPath = relativeSeoPath.replace(/\.html$/, '');
+const seoPagePath = !normalizedSeoPath || normalizedSeoPath === 'index.html' ? 'index.html' : normalizedSeoPath;
 
 const seoPages = {
   'index.html': {
@@ -162,47 +176,47 @@ const seoPages = {
     name: 'Zoqvera — Desenvolvimento Web, Software e IA',
     description: 'A Zoqvera desenvolve sites, landing pages, softwares, plataformas e soluções de inteligência artificial sob medida.'
   },
-  'servicos/sites-landing-pages.html': {
+  'servicos/sites-landing-pages': {
     kind: 'service',
     name: 'Sites e Landing Pages',
     description: 'Criação de sites institucionais e landing pages responsivas, claras e orientadas à conversão para profissionais e empresas.'
   },
-  'servicos/software-sob-medida.html': {
+  'servicos/software-sob-medida': {
     kind: 'service',
     name: 'Software sob medida',
     description: 'Desenvolvimento de sistemas e softwares web sob medida para organizar operações, automatizar processos e conectar dados, pagamentos e usuários.'
   },
-  'servicos/plataformas-digitais.html': {
+  'servicos/plataformas-digitais': {
     kind: 'service',
     name: 'Plataformas Digitais',
     description: 'Desenvolvimento de plataformas digitais, portais e aplicações web com autenticação, dados, painéis, fluxos e integrações sob medida.'
   },
-  'servicos/solucoes-de-ia.html': {
+  'servicos/solucoes-de-ia': {
     kind: 'service',
     name: 'Soluções de IA',
     description: 'Soluções de inteligência artificial conectadas a dados e processos reais: assistentes, análise, automação e funcionalidades inteligentes sob medida.'
   },
-  'servicos/evolucao-manutencao.html': {
+  'servicos/evolucao-manutencao': {
     kind: 'service',
     name: 'Evolução, Manutenção e Modernização',
     description: 'Evolução contínua de sites, sistemas e plataformas com novas funcionalidades, correções, performance, segurança e modernização técnica.'
   },
-  'portfolio/civica.html': {
+  'portfolio/civica': {
     kind: 'case',
     name: 'Case Plataforma Cívica — Zoqvera',
     description: 'Case de uma plataforma orientada a dados para apoiar análise e comparação de políticas públicas com metodologia auditável.'
   },
-  'portfolio/teacher-flavius.html': {
+  'portfolio/teacher-flavius': {
     kind: 'case',
     name: 'Case Teacher Flavius — Zoqvera',
     description: 'Case de um ecossistema web educacional com área do estudante, gestão acadêmica, pagamentos e automações.'
   },
-  'portfolio/cleiton-rodrigues.html': {
+  'portfolio/cleiton-rodrigues': {
     kind: 'case',
     name: 'Case Cleiton Rodrigues — Zoqvera',
     description: 'Case de uma landing page profissional para psicologia e psicanálise com posicionamento, experiência responsiva e conversão para WhatsApp.'
   },
-  'solicitar-orcamento.html': {
+  'solicitar-orcamento': {
     kind: 'conversion',
     name: 'Solicitar orçamento — Zoqvera',
     description: 'Briefing inicial para solicitar avaliação de um projeto digital com a Zoqvera.',
@@ -290,7 +304,7 @@ if (seoPage) {
 // FAQs de cauda longa para as páginas de serviço.
 // O conteúdo visível e o FAQPage usam a mesma fonte de dados.
 const serviceFaqs = {
-  'sites-landing-pages.html': {
+  'sites-landing-pages': {
     heading: 'Perguntas sobre criação de sites e landing pages',
     intro: 'Respostas objetivas para dúvidas comuns antes de contratar um site profissional ou uma landing page.',
     items: [
@@ -320,7 +334,7 @@ const serviceFaqs = {
       }
     ]
   },
-  'software-sob-medida.html': {
+  'software-sob-medida': {
     heading: 'Perguntas sobre desenvolvimento de software sob medida',
     intro: 'Dúvidas frequentes de empresas que precisam substituir planilhas, processos manuais ou ferramentas genéricas por um sistema próprio.',
     items: [
@@ -350,7 +364,7 @@ const serviceFaqs = {
       }
     ]
   },
-  'plataformas-digitais.html': {
+  'plataformas-digitais': {
     heading: 'Perguntas sobre desenvolvimento de plataformas digitais e SaaS',
     intro: 'Questões comuns antes de transformar uma ideia em portal, SaaS, área logada ou aplicação web multiusuário.',
     items: [
@@ -380,7 +394,7 @@ const serviceFaqs = {
       }
     ]
   },
-  'solucoes-de-ia.html': {
+  'solucoes-de-ia': {
     heading: 'Perguntas sobre inteligência artificial para empresas',
     intro: 'Respostas para empresas que avaliam usar assistentes, automação, análise ou IA integrada aos próprios produtos e dados.',
     items: [
@@ -410,7 +424,7 @@ const serviceFaqs = {
       }
     ]
   },
-  'evolucao-manutencao.html': {
+  'evolucao-manutencao': {
     heading: 'Perguntas sobre manutenção e modernização de sistemas',
     intro: 'Dúvidas de empresas que já possuem um site, sistema ou plataforma e precisam corrigir, ampliar ou modernizar a base existente.',
     items: [
