@@ -48,7 +48,6 @@ if (serviceNavCta) {
 
 const serviceCards = document.querySelectorAll('.service-card');
 const servicePageLinks = [
-  ['servicos/sites-landing-pages', 'Conhecer o serviço de sites institucionais'],
   ['servicos/sites-landing-pages', 'Conhecer o serviço de landing pages'],
   ['servicos/software-sob-medida', 'Conhecer o serviço de software sob medida'],
   ['servicos/plataformas-digitais', 'Conhecer o serviço de plataformas digitais'],
@@ -179,7 +178,7 @@ const seoPages = {
   'servicos/sites-landing-pages': {
     kind: 'service',
     name: 'Sites e Landing Pages',
-    description: 'Criação de sites institucionais e landing pages responsivas, claras e orientadas à conversão para profissionais e empresas.'
+    description: 'Criação de sites profissionais e landing pages responsivas, claras e orientadas à conversão para profissionais e empresas.'
   },
   'servicos/software-sob-medida': {
     kind: 'service',
@@ -309,8 +308,8 @@ const serviceFaqs = {
     intro: 'Respostas objetivas para dúvidas comuns antes de contratar um site profissional ou uma landing page.',
     items: [
       {
-        question: 'Qual é a diferença entre site institucional e landing page?',
-        answer: 'Um site institucional normalmente apresenta a empresa ou profissional de forma mais ampla, com serviços, diferenciais, portfólio e contato. Uma landing page é mais focada: organiza a mensagem em torno de uma oferta ou objetivo principal e reduz distrações para conduzir o visitante a uma ação específica.'
+        question: 'Qual é a diferença entre site profissional e landing page?',
+        answer: 'Um site profissional pode reunir diferentes páginas e conteúdos para apresentar serviços, diferenciais, portfólio e contato. Uma landing page é mais focada: organiza a mensagem em torno de uma oferta ou objetivo principal e reduz distrações para conduzir o visitante a uma ação específica.'
       },
       {
         question: 'Quanto custa criar um site profissional?',
@@ -318,7 +317,7 @@ const serviceFaqs = {
       },
       {
         question: 'Quanto tempo leva para criar um site ou landing page?',
-        answer: 'O prazo varia conforme escopo, quantidade de conteúdo, revisões e integrações. Uma página simples tende a exigir menos etapas do que um site institucional completo. O cronograma é definido depois do briefing e da priorização das entregas.'
+        answer: 'O prazo varia conforme escopo, quantidade de conteúdo, revisões e integrações. Uma página simples tende a exigir menos etapas do que um site com várias páginas e integrações. O cronograma é definido depois do briefing e da priorização das entregas.'
       },
       {
         question: 'O site funciona bem no celular?',
