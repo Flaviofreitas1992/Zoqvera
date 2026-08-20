@@ -28,15 +28,72 @@
     destination?.hostname === 'wa.me' || destination?.hostname?.endsWith('whatsapp.com')
   );
 
-  // Em alguns navegadores móveis/webviews, abrir o WhatsApp em uma nova aba
-  // pode ser bloqueado. Mantemos a navegação no mesmo contexto para permitir
-  // que o navegador encaminhe corretamente para o aplicativo.
+  const isLikelyMobileDevice = () => (
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+  );
+
+  const buildWhatsappAppUrl = (destination) => {
+    let phone = '';
+    const text = destination.searchParams.get('text') || '';
+
+    if (destination.hostname === 'wa.me') {
+      phone = destination.pathname.replace(/^\/+/, '').split('/')[0] || '';
+    } else {
+      phone = destination.searchParams.get('phone') || '';
+    }
+
+    const params = new URLSearchParams();
+    const normalizedPhone = phone.replace(/\D/g, '');
+    if (normalizedPhone) params.set('phone', normalizedPhone);
+    if (text) params.set('text', text);
+
+    const query = params.toString();
+    return `whatsapp://send${query ? `?${query}` : ''}`;
+  };
+
+  const openWhatsappDestination = (destination) => {
+    const fallbackUrl = destination.href;
+
+    // Em desktop, o link web continua sendo o comportamento mais previsível.
+    if (!isLikelyMobileDevice()) {
+      window.location.assign(fallbackUrl);
+      return;
+    }
+
+    // Em celular, tenta primeiro o protocolo registrado pelo aplicativo.
+    // Se o app não assumir a navegação, usa wa.me como fallback.
+    const appUrl = buildWhatsappAppUrl(destination);
+    let fallbackTimer;
+
+    const cleanupFallback = () => {
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', cleanupFallback);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) cleanupFallback();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', cleanupFallback, { once: true });
+
+    fallbackTimer = window.setTimeout(() => {
+      cleanupFallback();
+      window.location.assign(fallbackUrl);
+    }, 3000);
+
+    window.location.href = appUrl;
+  };
+
+  // Os formulários existentes usam window.open para o WhatsApp. Interceptamos
+  // apenas esses destinos e preservamos o comportamento nativo para os demais.
   const nativeWindowOpen = window.open.bind(window);
   window.open = (url, target, features) => {
     try {
       const destination = new URL(url, window.location.href);
       if (isWhatsappDestination(destination)) {
-        window.location.assign(destination.href);
+        openWhatsappDestination(destination);
         return null;
       }
     } catch {
@@ -82,7 +139,7 @@
         page_path: window.location.pathname,
         transport_type: 'beacon'
       });
-      window.location.assign(destination.href);
+      openWhatsappDestination(destination);
       return;
     }
 
