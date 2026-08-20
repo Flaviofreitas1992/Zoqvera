@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070b0f" />
+
+  <title>Solicitar orçamento — Zoqvera</title>
+  <meta name="description" content="Conte à Zoqvera o que você precisa desenvolver e envie um briefing estruturado para receber uma avaliação inicial do projeto." />
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Zoqvera">
+  <meta property="og:title" content="Solicitar orçamento — Zoqvera">
+  <meta property="og:description" content="Envie um briefing estruturado para sites, landing pages, software, plataformas, IA ou evolução de produtos digitais.">
+  <meta property="og:url" content="https://flaviofreitas1992.github.io/Zoqvera/solicitar-orcamento.html">
+  <meta property="og:image" content="https://flaviofreitas1992.github.io/Zoqvera/og-image-v2.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="pt_BR">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Solicitar orçamento — Zoqvera">
+  <meta name="twitter:description" content="Conte o que você quer construir e envie um briefing organizado para a Zoqvera.">
+  <meta name="twitter:image" content="https://flaviofreitas1992.github.io/Zoqvera/og-image-v2.jpg">
+
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="orcamento.css">
+</head>
+<body class="quote-page">
+  <div class="page-noise" aria-hidden="true"></div>
+
+  <header class="site-header" id="topo">
+    <div class="container nav-wrap quote-nav-wrap">
+      <a class="brand" href="index.html" aria-label="Zoqvera — página inicial">
+        <span class="brand-mark">Z</span>
+        <span class="brand-name">ZOQVERA</span>
+      </a>
+      <a class="quote-back" href="index.html">← Voltar ao site</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="quote-hero">
+      <div class="container quote-hero-grid">
+        <div class="quote-intro">
+          <div class="quote-label">Briefing inicial · Zoqvera</div>
+          <h1>Conte o que você quer <span>construir.</span></h1>
+          <p>Este briefing organiza as informações essenciais para entendermos o problema, o estágio atual e o tipo de solução que pode fazer sentido. Você não precisa ter o projeto totalmente definido.</p>
+
+          <div class="quote-expectations" aria-label="Como funciona">
+            <div><strong>01</strong><span>Você descreve o contexto e a necessidade.</span></div>
+            <div><strong>02</strong><span>O WhatsApp abre com o briefing já organizado.</span></div>
+            <div><strong>03</strong><span>Você revisa a mensagem e decide se deseja enviar.</span></div>
+          </div>
+        </div>
+
+        <div class="quote-form-wrap">
+          <form class="quote-form" id="quote-form">
+            <div class="quote-form-head">
+              <span>Solicitação de orçamento</span>
+              <strong>Briefing do projeto</strong>
+            </div>
+
+            <div class="quote-fields-two">
+              <label>
+                <span>Seu nome *</span>
+                <input type="text" name="name" autocomplete="name" placeholder="Nome e sobrenome" required />
+              </label>
+              <label>
+                <span>Empresa ou projeto</span>
+                <input type="text" name="company" autocomplete="organization" placeholder="Opcional" />
+              </label>
+            </div>
+
+            <div class="quote-fields-two">
+              <label>
+                <span>E-mail *</span>
+                <input type="email" name="email" autocomplete="email" placeholder="voce@empresa.com" required />
+              </label>
+              <label>
+                <span>Seu WhatsApp *</span>
+                <input type="tel" name="phone" autocomplete="tel" placeholder="(DDD) número" required />
+              </label>
+            </div>
+
+            <label>
+              <span>O que você precisa desenvolver? *</span>
+              <select name="service" id="quote-service" required>
+                <option value="" selected disabled>Selecione uma opção</option>
+                <option value="Sites e Landing Pages">Site institucional ou landing page</option>
+                <option value="Software sob medida">Software sob medida</option>
+                <option value="Plataformas Digitais">Plataforma digital / portal / SaaS</option>
+                <option value="Soluções de IA">Solução de inteligência artificial</option>
+                <option value="Evolução e Manutenção">Evolução, manutenção ou modernização</option>
+                <option value="Ainda não sei">Ainda não sei qual solução preciso</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Em que estágio o projeto está? *</span>
+              <select name="stage" required>
+                <option value="" selected disabled>Selecione o estágio atual</option>
+                <option value="Tenho uma ideia">Tenho uma ideia, mas ainda não existe produto</option>
+                <option value="Tenho briefing ou escopo">Já tenho briefing, escopo ou referências</option>
+                <option value="Tenho produto e quero evoluir">Já existe um produto e quero evoluí-lo</option>
+                <option value="Tenho produto com problemas">Já existe um produto com problemas a corrigir</option>
+                <option value="Outro estágio">Outro estágio</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Qual problema você quer resolver? *</span>
+              <textarea name="problem" rows="5" placeholder="Explique o contexto, quem usa a solução e o que hoje precisa melhorar." required></textarea>
+            </label>
+
+            <label>
+              <span>Quais funcionalidades ou entregas considera essenciais?</span>
+              <textarea name="features" rows="4" placeholder="Ex.: login, pagamentos, painel administrativo, integração com WhatsApp, IA, formulário, páginas específicas..."></textarea>
+            </label>
+
+            <div class="quote-fields-two">
+              <label>
+                <span>Prazo desejado *</span>
+                <select name="timeline" required>
+                  <option value="" selected disabled>Selecione uma opção</option>
+                  <option value="Até 30 dias">Até 30 dias</option>
+                  <option value="Entre 1 e 3 meses">Entre 1 e 3 meses</option>
+                  <option value="Entre 3 e 6 meses">Entre 3 e 6 meses</option>
+                  <option value="Sem urgência definida">Sem urgência definida</option>
+                  <option value="Quero discutir o prazo">Quero discutir o prazo</option>
+                </select>
+              </label>
+              <label>
+                <span>Site ou referência atual</span>
+                <input type="url" name="reference" inputmode="url" placeholder="https://... (opcional)" />
+              </label>
+            </div>
+
+            <label>
+              <span>Algo mais que precisamos saber?</span>
+              <textarea name="notes" rows="3" placeholder="Restrições, referências, integrações, contexto adicional ou dúvidas."></textarea>
+            </label>
+
+            <button class="button button-primary quote-submit" type="submit">
+              Preparar mensagem no WhatsApp <span>↗</span>
+            </button>
+            <p class="quote-privacy" id="quote-status">Nada é enviado automaticamente. Ao continuar, o WhatsApp será aberto com suas respostas para você revisar antes do envio.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-help">
+      <div class="container quote-help-grid">
+        <div>
+          <span>Não sabe definir o escopo?</span>
+          <h2>Não precisa chegar com a solução pronta.</h2>
+        </div>
+        <p>Descreva o problema com suas próprias palavras. Parte do trabalho da Zoqvera é transformar necessidades, regras e processos em um escopo técnico compreensível e executável.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer quote-footer">
+    <div class="container footer-main">
+      <a class="brand footer-brand" href="index.html"><span class="brand-mark">Z</span><span class="brand-name">ZOQVERA</span></a>
+      <p>Sites · Software · Plataformas · Inteligência Artificial</p>
+      <a href="#topo" class="back-top">Voltar ao topo ↑</a>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> Zoqvera. Todos os direitos reservados.</span>
+      <span>Feito para funcionar.</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="orcamento.js"></script>
+</body>
+</html>
