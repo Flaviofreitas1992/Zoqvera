@@ -11,6 +11,45 @@ const WHATSAPP_NUMBER = '5521984193930';
 
 if (year) year.textContent = new Date().getFullYear();
 
+const serviceCards = document.querySelectorAll('.service-card');
+const servicePageLinks = [
+  { index: 0, href: 'servicos/sites-landing-pages.html', label: 'Conhecer o serviço de sites institucionais' },
+  { index: 1, href: 'servicos/sites-landing-pages.html', label: 'Conhecer o serviço de landing pages' },
+  { index: 2, href: 'servicos/software-sob-medida.html', label: 'Conhecer o serviço de software sob medida' }
+];
+
+servicePageLinks.forEach(({ index, href, label }) => {
+  const card = serviceCards[index];
+  if (!card || card.querySelector('.service-card-link')) return;
+
+  const link = document.createElement('a');
+  link.className = 'service-card-link';
+  link.href = href;
+  link.setAttribute('aria-label', label);
+
+  while (card.firstChild) link.appendChild(card.firstChild);
+  card.appendChild(link);
+});
+
+if (serviceCards.length) {
+  const serviceLinkStyles = document.createElement('style');
+  serviceLinkStyles.textContent = `
+    .service-card-link {
+      display: block;
+      height: 100%;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .service-card-link:focus-visible {
+      outline: 3px solid #1e7047;
+      outline-offset: -5px;
+      border-radius: 4px;
+    }
+  `;
+  document.head.appendChild(serviceLinkStyles);
+}
+
 const civicaProjectLink = document.querySelector('.project-civica .project-link');
 if (civicaProjectLink) {
   civicaProjectLink.href = 'portfolio/civica.html';
