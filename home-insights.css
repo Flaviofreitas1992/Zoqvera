@@ -180,6 +180,36 @@ textarea:focus-visible{
   display:none;
 }
 
+.services-overview-footer{
+  margin-top:28px;
+  padding-top:28px;
+  border-top:1px solid rgba(9,20,28,.14);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:32px;
+}
+
+.services-overview-footer p{
+  max-width:690px;
+  margin:0;
+  color:#617069;
+  font-size:14px;
+  line-height:1.75;
+}
+
+.services-catalog-button{
+  flex:0 0 auto;
+  border:1px solid rgba(9,20,28,.16);
+  color:var(--ink);
+  background:transparent;
+}
+
+.services-catalog-button:hover{
+  border-color:#1e7047;
+  color:#1e7047;
+}
+
 .project-card{
   border-radius:var(--radius-lg);
 }
@@ -296,6 +326,16 @@ textarea:focus-visible{
 
   .service-card:nth-child(n+7) .service-icon{
     margin-bottom:24px;
+  }
+
+  .services-overview-footer{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .services-catalog-button{
+    width:100%;
   }
 
   .project-card{
