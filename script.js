@@ -11,6 +11,17 @@ const WHATSAPP_NUMBER = '5521984193930';
 
 if (year) year.textContent = new Date().getFullYear();
 
+const civicaProjectLink = document.querySelector('.project-civica .project-link');
+if (civicaProjectLink) {
+  civicaProjectLink.href = 'portfolio/civica.html';
+  civicaProjectLink.removeAttribute('target');
+  civicaProjectLink.removeAttribute('rel');
+  civicaProjectLink.setAttribute('aria-label', 'Ver case da Plataforma Cívica');
+
+  const civicaProjectCta = civicaProjectLink.querySelector('.project-cta');
+  if (civicaProjectCta) civicaProjectCta.textContent = 'Ver case →';
+}
+
 if (formNote) {
   formNote.textContent = 'Ao enviar, abriremos o WhatsApp da Zoqvera com os dados do seu projeto.';
 }
