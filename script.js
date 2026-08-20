@@ -33,6 +33,17 @@ if (teacherProjectLink) {
   if (teacherProjectCta) teacherProjectCta.textContent = 'Ver case →';
 }
 
+const cleitonProjectLink = document.querySelector('.project-cleiton .project-link');
+if (cleitonProjectLink) {
+  cleitonProjectLink.href = 'portfolio/cleiton-rodrigues.html';
+  cleitonProjectLink.removeAttribute('target');
+  cleitonProjectLink.removeAttribute('rel');
+  cleitonProjectLink.setAttribute('aria-label', 'Ver case do Cleiton Rodrigues');
+
+  const cleitonProjectCta = cleitonProjectLink.querySelector('.project-cta');
+  if (cleitonProjectCta) cleitonProjectCta.textContent = 'Ver case →';
+}
+
 if (formNote) {
   formNote.textContent = 'Ao enviar, abriremos o WhatsApp da Zoqvera com os dados do seu projeto.';
 }
