@@ -145,3 +145,144 @@ floatingStyles.textContent = `
 @media(prefers-reduced-motion:reduce){.whatsapp-float{transition:none}}
 `;
 document.head.appendChild(floatingStyles);
+
+// SEO técnico centralizado. Enquanto o domínio próprio não estiver ativo,
+// as URLs canônicas usam o endereço atual do GitHub Pages.
+const SEO_BASE_URL = 'https://flaviofreitas1992.github.io/Zoqvera';
+const currentPathname = window.location.pathname;
+const repositoryPrefix = '/Zoqvera/';
+const relativeSeoPath = currentPathname.startsWith(repositoryPrefix)
+  ? currentPathname.slice(repositoryPrefix.length)
+  : currentPathname.replace(/^\/+/, '');
+const seoPagePath = !relativeSeoPath || relativeSeoPath === 'index.html' ? 'index.html' : relativeSeoPath;
+
+const seoPages = {
+  'index.html': {
+    kind: 'website',
+    name: 'Zoqvera — Desenvolvimento Web, Software e IA',
+    description: 'A Zoqvera desenvolve sites, landing pages, softwares, plataformas e soluções de inteligência artificial sob medida.'
+  },
+  'servicos/sites-landing-pages.html': {
+    kind: 'service',
+    name: 'Sites e Landing Pages',
+    description: 'Criação de sites institucionais e landing pages responsivas, claras e orientadas à conversão para profissionais e empresas.'
+  },
+  'servicos/software-sob-medida.html': {
+    kind: 'service',
+    name: 'Software sob medida',
+    description: 'Desenvolvimento de sistemas e softwares web sob medida para organizar operações, automatizar processos e conectar dados, pagamentos e usuários.'
+  },
+  'servicos/plataformas-digitais.html': {
+    kind: 'service',
+    name: 'Plataformas Digitais',
+    description: 'Desenvolvimento de plataformas digitais, portais e aplicações web com autenticação, dados, painéis, fluxos e integrações sob medida.'
+  },
+  'servicos/solucoes-de-ia.html': {
+    kind: 'service',
+    name: 'Soluções de IA',
+    description: 'Soluções de inteligência artificial conectadas a dados e processos reais: assistentes, análise, automação e funcionalidades inteligentes sob medida.'
+  },
+  'servicos/evolucao-manutencao.html': {
+    kind: 'service',
+    name: 'Evolução, Manutenção e Modernização',
+    description: 'Evolução contínua de sites, sistemas e plataformas com novas funcionalidades, correções, performance, segurança e modernização técnica.'
+  },
+  'portfolio/civica.html': {
+    kind: 'case',
+    name: 'Case Plataforma Cívica — Zoqvera',
+    description: 'Case de uma plataforma orientada a dados para apoiar análise e comparação de políticas públicas com metodologia auditável.'
+  },
+  'portfolio/teacher-flavius.html': {
+    kind: 'case',
+    name: 'Case Teacher Flavius — Zoqvera',
+    description: 'Case de um ecossistema web educacional com área do estudante, gestão acadêmica, pagamentos e automações.'
+  },
+  'portfolio/cleiton-rodrigues.html': {
+    kind: 'case',
+    name: 'Case Cleiton Rodrigues — Zoqvera',
+    description: 'Case de uma landing page profissional para psicologia e psicanálise com posicionamento, experiência responsiva e conversão para WhatsApp.'
+  },
+  'solicitar-orcamento.html': {
+    kind: 'conversion',
+    name: 'Solicitar orçamento — Zoqvera',
+    description: 'Briefing inicial para solicitar avaliação de um projeto digital com a Zoqvera.',
+    noindex: true
+  }
+};
+
+const seoPage = seoPages[seoPagePath];
+if (seoPage) {
+  const canonicalUrl = seoPagePath === 'index.html'
+    ? `${SEO_BASE_URL}/`
+    : `${SEO_BASE_URL}/${seoPagePath}`;
+
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement('link');
+    canonical.rel = 'canonical';
+    document.head.appendChild(canonical);
+  }
+  canonical.href = canonicalUrl;
+
+  let robotsMeta = document.querySelector('meta[name="robots"]');
+  if (!robotsMeta) {
+    robotsMeta = document.createElement('meta');
+    robotsMeta.name = 'robots';
+    document.head.appendChild(robotsMeta);
+  }
+  robotsMeta.content = seoPage.noindex
+    ? 'noindex,follow'
+    : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
+
+  const organization = {
+    '@type': 'Organization',
+    '@id': `${SEO_BASE_URL}/#organization`,
+    name: 'Zoqvera',
+    url: `${SEO_BASE_URL}/`,
+    description: 'Desenvolvimento web, software, plataformas e soluções de inteligência artificial sob medida.',
+    logo: `${SEO_BASE_URL}/favicon.ico`,
+    image: `${SEO_BASE_URL}/og-image-v2.jpg`
+  };
+
+  let pageEntity;
+  if (seoPage.kind === 'service') {
+    pageEntity = {
+      '@type': 'Service',
+      '@id': `${canonicalUrl}#service`,
+      name: seoPage.name,
+      description: seoPage.description,
+      url: canonicalUrl,
+      provider: { '@id': `${SEO_BASE_URL}/#organization` }
+    };
+  } else if (seoPage.kind === 'case') {
+    pageEntity = {
+      '@type': 'CreativeWork',
+      '@id': `${canonicalUrl}#case`,
+      name: seoPage.name,
+      description: seoPage.description,
+      url: canonicalUrl,
+      inLanguage: 'pt-BR',
+      creator: { '@id': `${SEO_BASE_URL}/#organization` }
+    };
+  } else {
+    pageEntity = {
+      '@type': seoPage.kind === 'website' ? 'WebSite' : 'WebPage',
+      '@id': seoPage.kind === 'website' ? `${SEO_BASE_URL}/#website` : `${canonicalUrl}#webpage`,
+      name: seoPage.name,
+      description: seoPage.description,
+      url: canonicalUrl,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': `${SEO_BASE_URL}/#organization` }
+    };
+  }
+
+  document.querySelectorAll('script[data-zoqvera-schema]').forEach((node) => node.remove());
+  const structuredData = document.createElement('script');
+  structuredData.type = 'application/ld+json';
+  structuredData.dataset.zoqveraSchema = 'true';
+  structuredData.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [organization, pageEntity]
+  });
+  document.head.appendChild(structuredData);
+}
