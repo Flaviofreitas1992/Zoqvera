@@ -37,3 +37,268 @@
   .menu-toggle{position:relative;z-index:3}
   body.menu-open .whatsapp-float{display:none}
 }
+
+/* ===== Zoqvera visual system — 2026 ===== */
+:root{
+  --radius-sm:8px;
+  --radius-md:16px;
+  --radius-lg:24px;
+  --space-section:112px;
+  --shadow-card:0 20px 60px rgba(0,0,0,.18);
+}
+
+body{
+  font-size:16px;
+  line-height:1.6;
+  text-rendering:optimizeLegibility;
+}
+
+h1,h2,h3{
+  text-wrap:balance;
+}
+
+p{
+  text-wrap:pretty;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+}
+
+.section{
+  padding:var(--space-section) 0;
+}
+
+.site-header.scrolled{
+  background:rgba(7,11,15,.9);
+  border-color:rgba(255,255,255,.09);
+}
+
+.brand-mark{
+  border-radius:var(--radius-sm);
+}
+
+.button{
+  min-height:50px;
+  padding-inline:24px;
+}
+
+.hero{
+  min-height:780px;
+}
+
+.hero::before{
+  width:620px;
+  height:620px;
+  right:-190px;
+  background:radial-gradient(circle,rgba(134,255,183,.11),rgba(106,169,255,.045) 42%,transparent 68%);
+}
+
+.hero-grid{
+  min-height:560px;
+  grid-template-columns:1.08fr .92fr;
+  gap:64px;
+}
+
+.hero h1{
+  max-width:800px;
+  font-size:clamp(58px,6.8vw,90px);
+  line-height:.97;
+}
+
+.hero-lead{
+  max-width:620px;
+  font-size:18px;
+  line-height:1.7;
+}
+
+.code-card,
+.metric-card{
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-card);
+}
+
+.hero-visual::before{
+  background:radial-gradient(circle at center,rgba(134,255,183,.105),rgba(134,255,183,.025) 48%,transparent 68%);
+}
+
+.services-grid{
+  gap:12px;
+  border:0;
+}
+
+.service-card{
+  min-height:350px;
+  padding:32px;
+  border:1px solid rgba(9,20,28,.13);
+  border-radius:var(--radius-md);
+  background:rgba(255,255,255,.2);
+}
+
+.service-card:hover{
+  background:#e5ece7;
+  transform:translateY(-2px);
+}
+
+.service-card-featured{
+  background:var(--ink);
+  border-color:var(--ink);
+}
+
+.service-card-featured:hover{
+  background:#111d25;
+}
+
+.service-icon{
+  margin-bottom:44px;
+}
+
+.service-card:nth-child(n+7){
+  min-height:250px;
+  background:rgba(255,255,255,.08);
+}
+
+.service-card:nth-child(n+7) .service-icon{
+  margin-bottom:28px;
+  font-size:24px;
+}
+
+.service-card:nth-child(n+7) h3{
+  font-size:21px;
+  margin-bottom:12px;
+}
+
+.service-card:nth-child(n+7) p{
+  margin-bottom:0;
+}
+
+.service-card:nth-child(n+7) ul{
+  display:none;
+}
+
+.project-card{
+  border-radius:var(--radius-lg);
+}
+
+.project-preview,
+.manifesto-code,
+.home-insight-card,
+.proof-item{
+  border-radius:var(--radius-md);
+}
+
+.project-preview img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.credibility-section::before{
+  background:radial-gradient(circle,rgba(134,255,183,.2),rgba(134,255,183,.045) 46%,transparent 72%);
+}
+
+.credibility-card{
+  background:rgba(255,255,255,.14);
+}
+
+.proof-item{
+  box-shadow:0 14px 40px rgba(9,20,28,.09);
+}
+
+.process-section{
+  background:#dff5e7;
+}
+
+.process-intro .section-index{
+  color:#276b49;
+}
+
+.process-intro p,
+.process-step p{
+  color:#4d6156;
+}
+
+.process-step,
+.process-steps{
+  border-color:rgba(9,20,28,.14);
+}
+
+.home-insights{
+  background:#090f14;
+}
+
+.home-insights-grid{
+  gap:14px;
+}
+
+.home-insight-card{
+  border-radius:var(--radius-md);
+  background:#0d141a;
+}
+
+.home-insight-card.featured{
+  background:linear-gradient(145deg,rgba(134,255,183,.075),rgba(255,255,255,.018));
+}
+
+.contact-section{
+  background:#f0f3f0;
+}
+
+.contact-form input,
+.contact-form textarea{
+  transition:border-color .2s ease,background .2s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+  border-color:#1f6f49;
+  background:rgba(134,255,183,.035);
+}
+
+@media(max-width:1020px){
+  .hero-grid{
+    gap:36px;
+  }
+
+  .services-grid{
+    gap:10px;
+  }
+
+  .service-card:nth-child(n+7){
+    min-height:230px;
+  }
+}
+
+@media(max-width:680px){
+  :root{
+    --space-section:82px;
+  }
+
+  .hero h1{
+    font-size:clamp(46px,14vw,66px);
+    line-height:.98;
+  }
+
+  .hero-visual{
+    transform:scale(.9);
+  }
+
+  .service-card,
+  .service-card:nth-child(n+7){
+    min-height:auto;
+    padding:28px;
+  }
+
+  .service-card:nth-child(n+7) .service-icon{
+    margin-bottom:24px;
+  }
+
+  .project-card{
+    border-radius:var(--radius-md);
+  }
+}
