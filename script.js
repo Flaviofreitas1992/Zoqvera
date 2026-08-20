@@ -15,7 +15,9 @@ const serviceCards = document.querySelectorAll('.service-card');
 const servicePageLinks = [
   { index: 0, href: 'servicos/sites-landing-pages.html', label: 'Conhecer o serviço de sites institucionais' },
   { index: 1, href: 'servicos/sites-landing-pages.html', label: 'Conhecer o serviço de landing pages' },
-  { index: 2, href: 'servicos/software-sob-medida.html', label: 'Conhecer o serviço de software sob medida' }
+  { index: 2, href: 'servicos/software-sob-medida.html', label: 'Conhecer o serviço de software sob medida' },
+  { index: 3, href: 'servicos/plataformas-digitais.html', label: 'Conhecer o serviço de plataformas digitais' },
+  { index: 4, href: 'servicos/solucoes-de-ia.html', label: 'Conhecer o serviço de soluções de inteligência artificial' }
 ];
 
 servicePageLinks.forEach(({ index, href, label }) => {
