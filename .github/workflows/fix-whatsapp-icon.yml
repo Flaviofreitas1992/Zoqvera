@@ -1,0 +1,46 @@
+name: Fix WhatsApp icon
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-whatsapp-icon.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Replace floating WhatsApp icon
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('script-core.js')
+          text = path.read_text(encoding='utf-8')
+
+          old_html = """floatingWhatsapp.innerHTML = '<span class=\"whatsapp-float-icon\" aria-hidden=\"true\">↗</span><span>Fale no WhatsApp</span>';"""
+          new_html = """floatingWhatsapp.innerHTML = '<span class=\"whatsapp-float-icon\" aria-hidden=\"true\"><svg viewBox=\"0 0 16 16\" focusable=\"false\"><path fill=\"currentColor\" d=\"M13.601 2.326A7.85 7.85 0 0 0 7.994.001C3.627.001.068 3.56.068 7.928c0 1.399.366 2.76 1.057 3.965L0 16l4.11-1.074a7.9 7.9 0 0 0 3.885.992h.003c4.368 0 7.927-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zm-5.607 12.25a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.439.638.65-2.374-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.95-6.576 6.582-6.576a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.954 6.59-6.59 6.59zm3.61-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.514.646-.627.775-.116.133-.232.15-.43.05-.197-.1-.836-.308-1.592-.984-.59-.525-.985-1.17-1.1-1.367-.116-.198-.013-.306.087-.404.09-.088.197-.232.296-.347.1-.116.133-.198.198-.33.065-.134.033-.248-.016-.347-.05-.1-.445-1.076-.61-1.47-.16-.389-.323-.335-.445-.34-.116-.006-.247-.006-.38-.006a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.132 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.151.907.129 1.249.078.38-.058 1.171-.48 1.336-.943.165-.462.165-.858.116-.943-.05-.084-.182-.132-.38-.23z\"/></svg></span><span>Fale no WhatsApp</span>';"""
+
+          old_css = ".whatsapp-float-icon{width:26px;height:26px;display:grid;place-items:center;border:2px solid currentColor;border-radius:50%;font-size:15px}"
+          new_css = ".whatsapp-float-icon{width:28px;height:28px;display:grid;place-items:center}.whatsapp-float-icon svg{width:100%;height:100%;display:block}"
+
+          if old_html not in text:
+              raise SystemExit('Expected WhatsApp button markup was not found.')
+          if old_css not in text:
+              raise SystemExit('Expected WhatsApp icon styles were not found.')
+
+          text = text.replace(old_html, new_html, 1).replace(old_css, new_css, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add script-core.js
+          git diff --cached --quiet || git commit -m "fix: use WhatsApp icon in floating button"
+          git push
