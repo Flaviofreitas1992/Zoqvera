@@ -144,7 +144,7 @@ floatingWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICompon
 floatingWhatsapp.target = '_blank';
 floatingWhatsapp.rel = 'noopener noreferrer';
 floatingWhatsapp.setAttribute('aria-label', 'Falar com a Zoqvera pelo WhatsApp');
-floatingWhatsapp.innerHTML = '<span class="whatsapp-float-icon" aria-hidden="true">↗</span><span>Fale no WhatsApp</span>';
+floatingWhatsapp.innerHTML = '<span class="whatsapp-float-icon" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path fill="currentColor" d="M13.601 2.326A7.85 7.85 0 0 0 7.994.001C3.627.001.068 3.56.068 7.928c0 1.399.366 2.76 1.057 3.965L0 16l4.11-1.074a7.9 7.9 0 0 0 3.885.992h.003c4.368 0 7.927-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zm-5.607 12.25a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.439.638.65-2.374-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.95-6.576 6.582-6.576a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.954 6.59-6.59 6.59zm3.61-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.514.646-.627.775-.116.133-.232.15-.43.05-.197-.1-.836-.308-1.592-.984-.59-.525-.985-1.17-1.1-1.367-.116-.198-.013-.306.087-.404.09-.088.197-.232.296-.347.1-.116.133-.198.198-.33.065-.134.033-.248-.016-.347-.05-.1-.445-1.076-.61-1.47-.16-.389-.323-.335-.445-.34-.116-.006-.247-.006-.38-.006a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.132 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.151.907.129 1.249.078.38-.058 1.171-.48 1.336-.943.165-.462.165-.858.116-.943-.05-.084-.182-.132-.38-.23z"/></svg></span><span>Fale no WhatsApp</span>';
 document.body.appendChild(floatingWhatsapp);
 
 const floatingStyles = document.createElement('style');
@@ -152,7 +152,7 @@ floatingStyles.textContent = `
 .whatsapp-float{position:fixed;right:24px;bottom:24px;z-index:999;display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 18px 0 14px;border-radius:999px;background:#25d366;color:#07140c;font-family:'Manrope',sans-serif;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 14px 35px rgba(0,0,0,.28);transition:transform 180ms ease,background 180ms ease}
 .whatsapp-float:hover{transform:translateY(-3px);background:#2ee06f}
 .whatsapp-float:focus-visible{outline:3px solid #fff;outline-offset:3px}
-.whatsapp-float-icon{width:26px;height:26px;display:grid;place-items:center;border:2px solid currentColor;border-radius:50%;font-size:15px}
+.whatsapp-float-icon{width:28px;height:28px;display:grid;place-items:center}.whatsapp-float-icon svg{width:100%;height:100%;display:block}
 @media(max-width:640px){.whatsapp-float{right:16px;bottom:16px;width:56px;height:56px;min-height:56px;padding:0;justify-content:center}.whatsapp-float>span:last-child{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}}
 @media(prefers-reduced-motion:reduce){.whatsapp-float{transition:none}}
 `;
