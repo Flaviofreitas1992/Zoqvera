@@ -43,11 +43,6 @@
     if (menuIsOpen) closeNavigation({ restoreFocus: true });
   };
 
-  const handlePageShow = () => {
-    // Back/forward cache can restore a page with a stale open-menu state.
-    if (!mobileNav.matches) closeNavigation();
-  };
-
   const init = () => {
     configureToggle();
     closeNavigation();
@@ -59,7 +54,7 @@
     }
 
     document.addEventListener('keydown', handleKeydown);
-    window.addEventListener('pageshow', handlePageShow);
+    window.addEventListener('pageshow', () => closeNavigation());
   };
 
   if (document.readyState === 'loading') {
