@@ -229,16 +229,17 @@
     border-radius: 0;
     overflow: hidden;
     opacity: 1;
-    visibility: visible;
+    visibility: hidden;
     transform: none;
     background: transparent;
     box-shadow: none;
     backdrop-filter: none;
-    transition: max-height .22s ease, padding .22s ease;
+    transition: max-height .22s ease, padding .22s ease, visibility .22s ease;
   }
   .ux-services-menu.is-open .ux-services-panel {
     max-height: 560px;
     padding: 2px 0 12px 14px;
+    visibility: visible;
     transform: none;
   }
   .ux-services-panel a {
