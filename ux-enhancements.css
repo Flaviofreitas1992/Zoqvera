@@ -211,6 +211,7 @@
   .ux-enhanced .main-nav {
     align-items: stretch;
     gap: 0;
+    padding-bottom: 116px;
   }
   .ux-enhanced .main-nav > a,
   .ux-services-trigger {
@@ -249,6 +250,16 @@
   .ux-services-panel a small { display: none; }
   .ux-services-panel .ux-services-all { border-top: 0; border-left-color: var(--accent); }
   .ux-needs-heading { grid-template-columns: 1fr; gap: 20px; }
+  body.menu-open .nav-cta {
+    display: inline-flex;
+    position: fixed;
+    left: 24px;
+    right: 24px;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    z-index: 70;
+    width: auto;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 760px) {
