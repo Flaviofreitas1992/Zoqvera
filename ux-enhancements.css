@@ -207,7 +207,7 @@
   .ux-need-card:last-child { grid-column: 1 / -1; min-height: 220px; border-bottom: 0; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1020px) {
   .ux-enhanced .main-nav {
     align-items: stretch;
     gap: 0;
