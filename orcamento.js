@@ -9,10 +9,18 @@ if (serviceFromUrl && quoteService) {
   if (matchingOption) quoteService.value = serviceFromUrl;
 }
 
+quoteStatus?.setAttribute('role', 'status');
+quoteStatus?.setAttribute('aria-live', 'polite');
+
 quoteForm?.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  if (!quoteForm.reportValidity()) return;
+  if (!quoteForm.reportValidity()) {
+    const firstInvalid = quoteForm.querySelector(':invalid');
+    if (firstInvalid instanceof HTMLElement) firstInvalid.focus();
+    if (quoteStatus) quoteStatus.textContent = 'Revise os campos obrigatórios destacados antes de continuar.';
+    return;
+  }
 
   const data = new FormData(quoteForm);
   const field = (name) => String(data.get(name) || '').trim();
@@ -20,34 +28,37 @@ quoteForm?.addEventListener('submit', (event) => {
   const message = [
     'Olá! Gostaria de solicitar um orçamento para um projeto com a Zoqvera.',
     '',
-    '*BRIEFING DO PROJETO*',
+    '*DADOS INICIAIS*',
     `Nome: ${field('name')}`,
-    `Empresa/projeto: ${field('company') || 'Não informado'}`,
-    `E-mail: ${field('email')}`,
     `WhatsApp: ${field('phone')}`,
+    ...(field('email') ? [`E-mail: ${field('email')}`] : []),
     '',
-    `Serviço: ${field('service')}`,
-    `Estágio atual: ${field('stage')}`,
-    `Prazo desejado: ${field('timeline')}`,
+    `Serviço de interesse: ${field('service')}`,
     '',
-    '*Problema que quero resolver:*',
-    field('problem'),
-    '',
-    '*Funcionalidades/entregas essenciais:*',
-    field('features') || 'Ainda não definidas',
-    '',
-    `Site ou referência atual: ${field('reference') || 'Não informado'}`,
-    '',
-    '*Observações adicionais:*',
-    field('notes') || 'Nenhuma'
+    '*O que preciso resolver:*',
+    field('problem')
   ].join('\n');
 
   const whatsappUrl = `https://wa.me/${ZOQVERA_WHATSAPP}?text=${encodeURIComponent(message)}`;
+  const submitButton = quoteForm.querySelector('button[type="submit"]');
+
+  quoteForm.setAttribute('aria-busy', 'true');
+  if (submitButton instanceof HTMLButtonElement) {
+    submitButton.disabled = true;
+    submitButton.setAttribute('aria-disabled', 'true');
+  }
 
   if (quoteStatus) {
-    quoteStatus.textContent = 'Briefing preparado. Abrindo o WhatsApp para você revisar e enviar a mensagem.';
-    quoteStatus.setAttribute('role', 'status');
+    quoteStatus.textContent = 'Mensagem preparada. Abrindo o WhatsApp para você revisar e decidir se deseja enviar.';
   }
 
   window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+  window.setTimeout(() => {
+    quoteForm.removeAttribute('aria-busy');
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = false;
+      submitButton.removeAttribute('aria-disabled');
+    }
+  }, 1200);
 });
