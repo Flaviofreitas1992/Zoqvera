@@ -1,4 +1,4 @@
-// Google Analytics 4 + carregamento do script principal e da camada de UX da Zoqvera.
+// Google Analytics 4 + carregamento das camadas principal, UX e responsividade da Zoqvera.
 (() => {
   const GA_MEASUREMENT_ID = 'G-FGZGQTZDML';
   const currentScript = document.currentScript;
@@ -26,6 +26,14 @@
     uxStyles.href = new URL('ux-enhancements.css', scriptUrl).href;
     uxStyles.dataset.zoqveraUx = 'true';
     document.head.appendChild(uxStyles);
+  }
+
+  if (!document.querySelector('link[data-zoqvera-responsive]')) {
+    const responsiveStyles = document.createElement('link');
+    responsiveStyles.rel = 'stylesheet';
+    responsiveStyles.href = new URL('responsive.css', scriptUrl).href;
+    responsiveStyles.dataset.zoqveraResponsive = 'true';
+    document.head.appendChild(responsiveStyles);
   }
 
   const trackEvent = (eventName, parameters = {}, callback = null) => {
@@ -221,11 +229,17 @@
   uxScript.src = new URL('ux-enhancements.js', scriptUrl).href;
   uxScript.async = false;
 
+  const responsiveScript = document.createElement('script');
+  responsiveScript.src = new URL('responsive.js', scriptUrl).href;
+  responsiveScript.async = false;
+
   if (currentScript?.parentNode) {
     currentScript.parentNode.insertBefore(coreScript, currentScript.nextSibling);
     currentScript.parentNode.insertBefore(uxScript, coreScript.nextSibling);
+    currentScript.parentNode.insertBefore(responsiveScript, uxScript.nextSibling);
   } else {
     document.body.appendChild(coreScript);
     document.body.appendChild(uxScript);
+    document.body.appendChild(responsiveScript);
   }
 })();
