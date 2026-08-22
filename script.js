@@ -1,7 +1,8 @@
-// Google Analytics 4 + carregamento do script principal da Zoqvera.
+// Google Analytics 4 + carregamento do script principal e da camada de UX da Zoqvera.
 (() => {
   const GA_MEASUREMENT_ID = 'G-FGZGQTZDML';
   const currentScript = document.currentScript;
+  const scriptUrl = currentScript?.src || new URL('/script.js', window.location.origin).href;
 
   if (!window.__zoqveraGa4Loaded) {
     window.__zoqveraGa4Loaded = true;
@@ -17,6 +18,14 @@
     googleTag.async = true;
     googleTag.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`;
     document.head.appendChild(googleTag);
+  }
+
+  if (!document.querySelector('link[data-zoqvera-ux]')) {
+    const uxStyles = document.createElement('link');
+    uxStyles.rel = 'stylesheet';
+    uxStyles.href = new URL('ux-enhancements.css', scriptUrl).href;
+    uxStyles.dataset.zoqveraUx = 'true';
+    document.head.appendChild(uxStyles);
   }
 
   const trackEvent = (eventName, parameters = {}, callback = null) => {
@@ -135,6 +144,7 @@
     if (link.closest('.service-cta')) return 'service_cta';
     if (link.closest('.case-cta')) return 'case_cta';
     if (link.closest('.hero-actions')) return 'hero_cta';
+    if (link.closest('.ux-needs-section')) return 'needs_section';
     if (link.closest('.main-nav, .site-header')) return 'header';
     if (link.closest('.site-footer, .service-footer, .case-footer, .insights-footer')) return 'footer';
     return 'page_link';
@@ -204,13 +214,18 @@
   }, true);
 
   const coreScript = document.createElement('script');
-  const scriptUrl = currentScript?.src || new URL('/script.js', window.location.origin).href;
   coreScript.src = new URL('script-core.js', scriptUrl).href;
   coreScript.async = false;
 
+  const uxScript = document.createElement('script');
+  uxScript.src = new URL('ux-enhancements.js', scriptUrl).href;
+  uxScript.async = false;
+
   if (currentScript?.parentNode) {
     currentScript.parentNode.insertBefore(coreScript, currentScript.nextSibling);
+    currentScript.parentNode.insertBefore(uxScript, coreScript.nextSibling);
   } else {
     document.body.appendChild(coreScript);
+    document.body.appendChild(uxScript);
   }
 })();
