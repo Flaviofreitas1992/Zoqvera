@@ -1,6 +1,17 @@
 (() => {
   const MOBILE_NAV_QUERY = '(max-width: 1020px)';
   const mobileNav = window.matchMedia(MOBILE_NAV_QUERY);
+  const responsiveScriptUrl = document.currentScript?.src || new URL('responsive.js', window.location.href).href;
+
+  const ensureHardeningStyles = () => {
+    if (document.querySelector('link[data-zoqvera-responsive-hardening]')) return;
+
+    const styles = document.createElement('link');
+    styles.rel = 'stylesheet';
+    styles.href = new URL('responsive-hardening.css', responsiveScriptUrl).href;
+    styles.dataset.zoqveraResponsiveHardening = 'true';
+    document.head.appendChild(styles);
+  };
 
   const getElements = () => ({
     nav: document.querySelector('.main-nav'),
@@ -86,6 +97,7 @@
   };
 
   const init = () => {
+    ensureHardeningStyles();
     configureToggle();
     closeNavigation();
 
