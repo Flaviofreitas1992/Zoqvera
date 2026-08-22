@@ -262,6 +262,7 @@ textarea:focus-visible{
 
 @media(max-width:1020px){
   .hero-grid{
+    grid-template-columns:1fr;
     gap:36px;
   }
 
