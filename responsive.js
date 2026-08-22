@@ -13,6 +13,9 @@
     document.head.appendChild(styles);
   };
 
+  // CSS can be requested immediately; DOM-dependent behavior is initialized later.
+  ensureHardeningStyles();
+
   const getElements = () => ({
     nav: document.querySelector('.main-nav'),
     toggle: document.querySelector('.menu-toggle'),
@@ -97,7 +100,6 @@
   };
 
   const init = () => {
-    ensureHardeningStyles();
     configureToggle();
     closeNavigation();
 
