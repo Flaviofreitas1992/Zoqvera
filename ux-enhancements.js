@@ -1,16 +1,13 @@
 (() => {
   const ROOT = new URL('./', document.currentScript?.src || window.location.href);
-  const isHome = /\/(?:index\.html)?$/.test(window.location.pathname);
+  const normalizedPath = window.location.pathname.replace(/\/index\.html$/, '/');
+  const isHome = normalizedPath === '/';
   const isQuotePage = document.body.classList.contains('quote-page');
   const isServicePage = document.body.classList.contains('service-page');
 
-  const serviceByPage = {
-    'sites-landing-pages': 'Landing Page Profissional',
-    'software-sob-medida': 'Sistema Web Personalizado',
-    'plataformas-digitais': 'Área do Cliente',
-    'solucoes-de-ia': 'Integração com Inteligência Artificial',
-    'evolucao-manutencao': 'Reformulação de Site'
-  };
+  // As páginas atuais de serviço representam categorias amplas. Não pré-selecionamos
+  // um produto específico no orçamento para evitar induzir uma escolha incorreta.
+  const serviceByPage = {};
 
   const rootUrl = (path = '') => new URL(path, ROOT).href;
   const quoteUrl = (service = '') => {
@@ -28,6 +25,7 @@
     const main = document.querySelector('main');
     if (!main || document.querySelector('.ux-skip-link')) return;
     if (!main.id) main.id = 'conteudo-principal';
+    if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
 
     const link = document.createElement('a');
     link.className = 'ux-skip-link';
@@ -63,7 +61,7 @@
     nav.innerHTML = `
       <a href="#topo" data-nav-section="topo">Início</a>
       <div class="ux-services-menu">
-        <button class="ux-services-trigger" type="button" aria-expanded="false" aria-controls="ux-services-panel">
+        <button class="ux-services-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="ux-services-panel">
           Serviços <span aria-hidden="true">▾</span>
         </button>
         <div class="ux-services-panel" id="ux-services-panel">
@@ -163,7 +161,7 @@
         </div>
         <div class="ux-needs-grid">
           <a class="ux-need-card" href="${rootUrl('servicos/sites-landing-pages')}"><span>01</span><strong>Quero apresentar meu negócio melhor</strong><p>Sites profissionais, landing pages e páginas de vendas.</p><b>Ver soluções para sites →</b></a>
-          <a class="ux-need-card" href="${quoteUrl('Loja Virtual')}"><span>02</span><strong>Quero vender pela internet</strong><p>Loja virtual, pagamentos e estrutura de comércio digital.</p><b>Ver solução para vendas →</b></a>
+          <a class="ux-need-card" href="${rootUrl('servicos/plataformas-digitais')}"><span>02</span><strong>Quero vender pela internet</strong><p>Loja virtual, pagamentos e estrutura de comércio digital.</p><b>Ver solução para vendas →</b></a>
           <a class="ux-need-card" href="${rootUrl('servicos/software-sob-medida')}"><span>03</span><strong>Preciso digitalizar um processo</strong><p>Sistemas, aplicações web e fluxos personalizados.</p><b>Ver sistemas sob medida →</b></a>
           <a class="ux-need-card" href="${rootUrl('servicos/solucoes-de-ia')}"><span>04</span><strong>Quero automatizar ou usar IA</strong><p>Atendimento, conteúdo, análise e automações inteligentes.</p><b>Ver soluções de IA →</b></a>
           <a class="ux-need-card" href="${rootUrl('servicos/evolucao-manutencao')}"><span>05</span><strong>Meu site ou sistema precisa evoluir</strong><p>Modernização, performance, SEO, correções e manutenção.</p><b>Ver evolução e suporte →</b></a>
@@ -171,6 +169,23 @@
       </div>
     `;
     services.before(section);
+  };
+
+  const updateHomeSectionIndexes = () => {
+    if (!isHome) return;
+    const sections = [
+      ['#servicos .section-index', '02 / SERVIÇOS'],
+      ['#portfolio .section-index', '03 / PORTFÓLIO'],
+      ['#competencia .section-index', '04 / COMPETÊNCIA'],
+      ['#processo .section-index', '05 / PROCESSO'],
+      ['#sobre .section-index', '06 / ZOQVERA'],
+      ['#insights .section-index', '07 / INSIGHTS'],
+      ['#contato .section-index', '08 / CONTATO']
+    ];
+    sections.forEach(([selector, label]) => {
+      const element = document.querySelector(selector);
+      if (element) element.textContent = label;
+    });
   };
 
   const improveServicesDiscovery = () => {
@@ -422,6 +437,7 @@
     enhanceHomeHeader();
     enhanceHero();
     insertNeedFinder();
+    updateHomeSectionIndexes();
     improveServicesDiscovery();
     enhanceServicePage();
     simplifyQuoteForm();
