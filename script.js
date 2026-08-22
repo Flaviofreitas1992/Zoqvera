@@ -36,6 +36,14 @@
     document.head.appendChild(responsiveStyles);
   }
 
+  if (!document.querySelector('link[data-zoqvera-responsive-content]')) {
+    const responsiveContentStyles = document.createElement('link');
+    responsiveContentStyles.rel = 'stylesheet';
+    responsiveContentStyles.href = new URL('responsive-content.css', scriptUrl).href;
+    responsiveContentStyles.dataset.zoqveraResponsiveContent = 'true';
+    document.head.appendChild(responsiveContentStyles);
+  }
+
   const trackEvent = (eventName, parameters = {}, callback = null) => {
     if (typeof window.gtag !== 'function') {
       callback?.();
