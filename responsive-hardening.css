@@ -1,0 +1,287 @@
+/* Final responsive hardening: zoom, touch ergonomics, safe areas and remaining editorial grids. */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body,
+main,
+section,
+.container,
+.nav-wrap,
+.hero-grid,
+.project-link,
+.service-section-head,
+.case-section-head,
+.article-layout,
+.cluster-head,
+.cluster-pillar,
+.cluster-other-grid {
+  min-width: 0;
+}
+
+:where(input, select, textarea, button) {
+  max-width: 100%;
+}
+
+:where(p, li, small, label, .form-note, .quote-privacy, .article-body, .case-intro, .service-lead) {
+  overflow-wrap: break-word;
+}
+
+:where(pre, code) {
+  max-width: 100%;
+}
+
+.whatsapp-float {
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+/* The mobile button previously inherited display:block, so flex alignment was ineffective. */
+@media (max-width: 1020px) {
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-nav.open {
+    padding-left: max(24px, env(safe-area-inset-left));
+    padding-right: max(24px, env(safe-area-inset-right));
+  }
+
+  .main-nav.open a,
+  .ux-services-trigger {
+    white-space: normal;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 680px) {
+  .whatsapp-float {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+
+  .brand,
+  .brand-name,
+  .case-nav,
+  .insight-nav,
+  .service-nav,
+  .quote-back {
+    min-width: 0;
+  }
+
+  .button,
+  .text-link,
+  .ux-service-scope-link,
+  .case-nav a,
+  .insight-nav a,
+  .service-nav a,
+  .quote-back {
+    line-height: 1.25;
+  }
+}
+
+/* Insights cluster pages were still using only their local breakpoints. */
+.cluster-section,
+.cluster-other {
+  overflow-x: clip;
+}
+
+.cluster-head > *,
+.cluster-pillar > *,
+.cluster-side-list > *,
+.cluster-other-grid > * {
+  min-width: 0;
+}
+
+.cluster-pillar-card,
+.cluster-side-card,
+.cluster-other-card {
+  max-width: 100%;
+}
+
+.cluster-pillar-card h3,
+.cluster-side-card h3,
+.cluster-other-card h3,
+.cluster-head h2 {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@media (hover: none) {
+  .cluster-pillar-card:hover,
+  .cluster-side-card:hover,
+  .cluster-other-card:hover {
+    transform: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .cluster-pillar-card a,
+  .cluster-side-card a,
+  .cluster-other-card a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .cluster-head,
+  .cluster-pillar,
+  .cluster-other-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cluster-head {
+    gap: 20px;
+  }
+
+  .cluster-pillar-card,
+  .cluster-side-card,
+  .cluster-other-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .cluster-section,
+  .cluster-other {
+    padding: 76px 0;
+  }
+
+  .cluster-head {
+    margin-bottom: 36px;
+  }
+
+  .cluster-head h2 {
+    font-size: clamp(34px, 10vw, 48px);
+    line-height: 1.03;
+    letter-spacing: -.045em;
+  }
+
+  .cluster-head p {
+    margin-top: 16px;
+    line-height: 1.7;
+  }
+
+  .cluster-pillar,
+  .cluster-side-list,
+  .cluster-other-grid {
+    gap: 12px;
+  }
+
+  .cluster-pillar-card,
+  .cluster-side-card,
+  .cluster-other-card {
+    padding: 24px;
+    border-radius: 18px;
+  }
+
+  .cluster-pillar-card h3 {
+    margin-top: 34px;
+    font-size: clamp(28px, 8.5vw, 38px);
+  }
+
+  .cluster-side-card h3,
+  .cluster-other-card h3 {
+    font-size: 21px;
+  }
+
+  .cluster-other-card h3 {
+    margin-top: 34px;
+  }
+}
+
+@media (max-width: 380px) {
+  .cluster-pillar-card,
+  .cluster-side-card,
+  .cluster-other-card {
+    padding-inline: 20px;
+  }
+
+  .cluster-head h2 {
+    font-size: clamp(32px, 9.5vw, 42px);
+  }
+}
+
+/* 200% browser zoom commonly pushes desktop layouts into these CSS widths. */
+@media (max-width: 520px) {
+  .section-heading > p,
+  .credibility-heading > p,
+  .ux-needs-heading > p,
+  .service-copy > p,
+  .case-section-copy > p,
+  .insights-list-head p,
+  .quote-intro > p {
+    max-width: 100%;
+  }
+
+  .button,
+  .service-actions .button,
+  .service-cta-actions .button,
+  .case-actions .button,
+  .case-cta-actions .button {
+    white-space: normal;
+  }
+
+  .service-tags span,
+  .tech-pill,
+  .capability-band span,
+  .insights-topics span {
+    white-space: normal;
+    line-height: 1.4;
+  }
+}
+
+/* Short mobile landscape: keep fixed controls from consuming the usable viewport. */
+@media (max-width: 1020px) and (max-height: 500px) and (orientation: landscape) {
+  .site-header .nav-wrap {
+    height: 64px;
+  }
+
+  .main-nav.open {
+    top: 64px;
+    height: calc(100dvh - 64px);
+    max-height: calc(100dvh - 64px);
+  }
+
+  .hero-grid {
+    padding-top: 36px;
+  }
+}
+
+/* Large monitors: preserve readable measure instead of stretching content edge-to-edge. */
+@media (min-width: 1600px) {
+  .article-body {
+    max-width: 760px;
+  }
+
+  .hero-lead,
+  .service-lead,
+  .case-intro,
+  .insights-lead,
+  .article-deck {
+    max-width: 780px;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .button-outline,
+  .service-card,
+  .project-card,
+  .home-insight-card,
+  .case-stage,
+  .feature-card,
+  .result-card,
+  .insight-card,
+  .sidebar-card,
+  .related-card,
+  .cluster-pillar-card,
+  .cluster-side-card,
+  .cluster-other-card {
+    border-width: 2px;
+  }
+}
